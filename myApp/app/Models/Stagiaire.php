@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Stagiaire extends Model
@@ -30,5 +31,9 @@ class Stagiaire extends Model
 
     protected $primaryKey = 'cef';
     public $incrementing = false;
-    protected $keyType = 'int';
+    protected $keyType = 'string';
+
+    public function filieres():BelongsToMany{
+        return $this->belongsToMany(Filiere::class,'filiere_stagiaire','stagiaire_id','filiere_id','cef','code_f');
+    }
 }
