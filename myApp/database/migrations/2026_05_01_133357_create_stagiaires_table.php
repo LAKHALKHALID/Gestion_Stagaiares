@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('nom_annee_scolaire',10);
             $table->date('date_naissance');
             $table->string('lieu_naissance',30);
-            $table->string('mode_formation', 30);
             $table->string('niveau_formation', 40);
             $table->string('type_formation', 30);
             $table->string('annee_etude', 30);

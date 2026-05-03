@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('niveau',40);
             $table->text('desc')->nullable();
             $table->string('secteur')->nullable();
+            $table->string('mode_formation', 30);
             $table->string('nom_filiere_francais');
             $table->string('nom_filiere_arabe');
             $table->timestamps();
