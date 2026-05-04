@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Groupe extends Model
 {
@@ -23,5 +24,9 @@ class Groupe extends Model
 
     public function filiere():BelongsTo{
         return $this->belongsTo(Filiere::class,'filiere_id','code_f');
+    }
+
+    public function stagiaires():BelongsToMany{
+        return $this->belongsToMany(Stagiaire::class,'stagiaire_groupe','groupe_id','stagiaire_id','code_g','cef');
     }
 }

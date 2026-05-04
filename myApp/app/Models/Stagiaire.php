@@ -36,4 +36,8 @@ class Stagiaire extends Model
     public function filieres():BelongsToMany{
         return $this->belongsToMany(Filiere::class,'filiere_stagiaire','stagiaire_id','filiere_id','cef','code_f');
     }
+
+    public function groupes():BelongsToMany{
+        return $this->belongsToMany(Groupe::class,'stagiaire_groupe', 'stagiaire_id','groupe_id','cef','code_g');
+    }
 }
