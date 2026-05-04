@@ -46,6 +46,28 @@
                     @enderror
                 </div>
                 <div class="mb-3">
+                    <label class="form-label fw-bold">Mode de formation</label>
+                    <select name="mode_f"
+                            class="form-select @error('mode_f') is-invalid @enderror">
+                        <option value="">Choisir mode de formation</option>
+
+                        <option value="Qualifiant"
+                            {{ old('mode_f') == 'Qualifiant' ? 'selected' : '' }}>
+                            Qualifiant
+                        </option>
+
+                        <option value="Diploma"
+                            {{ old('mode_f') == 'Diploma' ? 'selected' : '' }}>
+                            Diploma
+                        </option>
+                    </select>
+                    @error('mode_f')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                    @enderror
+                </div>
+                
+               
+                <div class="mb-3">
                     <label class="form-label fw-bold">Nom (Français)</label>
                     <input type="text" name="nom_filiere_francais"
                            value="{{ old('nom_filiere_francais') }}"

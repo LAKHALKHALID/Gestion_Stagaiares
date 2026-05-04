@@ -17,6 +17,7 @@ class Filiere extends Model
     protected $fillable = [
         'code_f',
         'niveau',
+        'mode_f',
         'description',
         'secteur',
         'nom_filiere_francais',

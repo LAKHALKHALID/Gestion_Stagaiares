@@ -45,6 +45,21 @@
                         Nb: <span class="badge bg-primary">{{ $nb }}</span>
                     </div>
 
+                    <div class="col-md-4">
+                        <select name="mode_f" class="form-control" onchange="this.form.submit()">
+                            <option value="">-- Tous les modes --</option>
+                            <option value="Qualifiant"
+                                {{ request('mode_f') == 'Qualifiant' ? 'selected' : '' }}>
+                                Qualifiant
+                            </option>
+                            <option value="Diploma"
+                                {{ request('mode_f') == 'Diploma' ? 'selected' : '' }}>
+                                Diploma
+                            </option>
+
+                        </select>
+                    </div>
+
                     <div class="col-md-2">
                         <a href="{{ route('filiers.index') }}" class="btn btn-secondary">
                             Reset
@@ -61,6 +76,7 @@
                         <tr>
                             <th>Code</th>
                             <th>Niveau</th>
+                            <th>Mode</th>
                             <th>Français</th>
                             <th>Arabe</th>
                             <th width="180">Actions</th>
@@ -72,6 +88,7 @@
                             <tr>
                                 <td>{{ $f->code_f }}</td>
                                 <td>{{ $f->niveau }}</td>
+                                <td>{{ $f->mode_f }}</td>
                                 <td>{{ $f->nom_filiere_francais }}</td>
                                 <td dir="rtl">{{ $f->nom_filiere_arabe }}</td>
 

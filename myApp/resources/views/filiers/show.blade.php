@@ -27,6 +27,15 @@
             </div>
 
             <div class="row mb-3">
+                <div class="col-md-4 fw-bold text-muted">Mode de formation :</div>
+                <div class="col-md-8">
+                    <span class="badge bg-info text-dark px-3 py-2">
+                        {{ $filiere->mode_f }}
+                    </span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
                 <div class="col-md-4 fw-bold text-muted">Nom (Français) :</div>
                 <div class="col-md-8 text-primary">
                     {{ $filiere->nom_filiere_francais }}
