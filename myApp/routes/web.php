@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StagiaireController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,11 @@ Route::controller(StagiaireController::class)->group(function(){
     Route::get('/stagiaires/{cef}/edit', 'edit')->name('stagiaires.edit');
     Route::put('/stagiaires/{cef}', 'update')->name('stagiaires.update');
     Route::delete('/stagiaires/{cef}', 'destroy')->name('stagiaires.destroy');
+});
+
+Route::controller(InscriptionController::class)->group(function(){
+    Route::get('/inscription','index')->name('inscription.index');
+    Route::post('/inscription','store')->name('inscription.store');
 });
 
 require __DIR__.'/auth.php';
