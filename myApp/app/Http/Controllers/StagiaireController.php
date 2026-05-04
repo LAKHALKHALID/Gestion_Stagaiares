@@ -2,18 +2,39 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Filiere;
+use App\Models\Groupe;
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
 
 class StagiaireController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    
+    public function index(Request $req)
     {
-        $stagiaires = Stagiaire::all();
-        return view('stagiaires.index',compact('stagiaires'));
+        $g = Groupe::all();
+        $f = Filiere::all();
+
+        if($req->cef !== null){
+                $stagiaires =  Stagiaire::where('cef',$req->cef)->get();
+        }
+        elseif($req->cef == null){
+            $code_f = $req->code_f;
+            $code_g = $req->code_g;
+            $stagiaires = Stagiaire::whereHas('filieres', function ($query) use ($code_f) {
+                $query->where('code_f', $code_f);
+            })->whereHas('groupes', function ($query) use ($code_g) {
+                $query->where('code_g', $code_g);
+            })
+                ->get();
+        }
+        else{
+            $stagiaires = Stagiaire::all();
+        }
+
+        $g = Groupe::all();
+        $f = Filiere::all();
+        return view('stagiaires.index',compact('stagiaires','g','f'));
     }
 
     /**
