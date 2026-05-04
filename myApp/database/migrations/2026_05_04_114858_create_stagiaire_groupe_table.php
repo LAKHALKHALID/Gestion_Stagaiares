@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::disableForeignKeyConstraints();
-        Schema::create('filiere_stagiaire', function (Blueprint $table) {
-            $table->string('filiere_id',20);
-            $table->string('stagiaire_id',20);
-            $table->foreign('filiere_id')->references('code_f')->on('filieres')->cascadeOnDelete()->cascadeOnUpdate();
+        Schema::create('stagiaire_groupe', function (Blueprint $table) {
+            $table->string('groupe_id');
+            $table->string('stagiaire_id', 20);
+            $table->foreign('groupe_id')->references('code_g')->on('groupes')->cascadeOnDelete()->cascadeOnUpdate();
             $table->foreign('stagiaire_id')->references('cef')->on('stagiaires')->cascadeOnDelete()->cascadeOnUpdate();
-            $table->primary(['filiere_id', 'stagiaire_id']);
-
+            $table->primary(['groupe_id', 'stagiaire_id']);
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('filiere_stagiaire');
+        Schema::dropIfExists('stagiaire_groupe');
     }
 };
