@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Stagiaire extends Model
@@ -39,5 +40,17 @@ class Stagiaire extends Model
 
     public function groupes():BelongsToMany{
         return $this->belongsToMany(Groupe::class,'stagiaire_groupe', 'stagiaire_id','groupe_id','cef','code_g');
+    }
+
+    public function absences():HasMany{
+        return $this->hasMany(Absence::class,'stagiaire_id','cef');
+    }
+
+    public function comportements():HasMany{
+        return $this->hasMany(Comportement::class,'stagiaire_id','cef');
+    }
+
+    public function transactions():HasMany{
+        return $this->hasMany(Transaction::class,'stagiaire_id','cef');
     }
 }

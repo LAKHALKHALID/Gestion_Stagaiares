@@ -15,10 +15,12 @@ class StagiaireController extends Controller
         $g = Groupe::all();
         $f = Filiere::all();
 
-        if($req->cef !== null){
+        // dd($req->code_f);
+
+        if($req->cef !== null ){
                 $stagiaires =  Stagiaire::where('cef',$req->cef)->get();
         }
-        elseif($req->cef == null){
+        elseif($req->cef == null && $req->code_g != null && $req->code_g != null){
             $code_f = $req->code_f;
             $code_g = $req->code_g;
             $stagiaires = Stagiaire::whereHas('filieres', function ($query) use ($code_f) {

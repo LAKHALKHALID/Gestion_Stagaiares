@@ -12,6 +12,12 @@
               <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           </div>
         @endif
+        @if (session('refuse'))
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+              {{ session('refuse') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        @endif
         <form action="{{route('inscription.store')}}" method="post" class="mb-3">
           @csrf
             <div class="row g-3 align-items-end">

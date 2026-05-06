@@ -32,5 +32,6 @@
     </div>
 
     @stack('scripts')
+    @yield("js_script")
 </body>
 </html>

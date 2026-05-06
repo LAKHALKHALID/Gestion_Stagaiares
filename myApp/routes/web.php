@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\AbsenceController;
+use App\Http\Controllers\ComportementController;
 use App\Http\Controllers\InscriptionController;
+use App\Http\Controllers\ListAbsenceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\StagiaireController;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +35,28 @@ Route::controller(StagiaireController::class)->group(function(){
 Route::controller(InscriptionController::class)->group(function(){
     Route::get('/inscription','index')->name('inscription.index');
     Route::post('/inscription','store')->name('inscription.store');
+});
+
+Route::controller(AbsenceController::class)->group(function(){
+
+    Route::get('/absences','index')->name('absences.index');
+    Route::get('/absences/create', 'create')->name('absences.create');
+    Route::post('/absences', 'store')->name('absences.store');
+    Route::get('/absences/{id}/edit', 'edit')->name('absences.edit');
+    Route::put('/absences/{id}', 'update')->name('absences.update');
+});
+
+Route::controller(ComportementController::class)->group(function(){
+
+    Route::get('/comportement','index')->name('comportement.index');
+    Route::get('/comportement/create', 'create')->name('comportement.create');
+    Route::post('/comportement', 'store')->name('comportement.store');
+    
+});
+
+Route::controller(ListAbsenceController::class)->group(function(){
+    Route::get('/listAbsences','index')->name('listAbsences.index');
+    Route::post('/listAbsences','store')->name('listAbsences.store');
 });
 
 require __DIR__.'/auth.php';

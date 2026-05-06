@@ -26,6 +26,7 @@
                     <label class="form-label">Filière</label>
                     {{-- <input type="text" name="code_f" class="form-control" placeholder="Enter Filière"> --}}
                     <select class="form-select" name="code_f">
+                      <option value="" selected>All</option>
                       @foreach ($f as $item)
                           <option value="{{$item->code_f}}">{{$item->nom_filiere_francais}}</option>
                       @endforeach
@@ -36,6 +37,7 @@
                     <label class="form-label">Groupe</label>
                     {{-- <input type="text" name="code_f" class="form-control" placeholder="Enter Groupe"> --}}
                     <select class="form-select" name="code_g">
+                      <option value="" selected>All</option>
                       @foreach ($g as $item)
                           <option value="{{$item->code_g}}">{{$item->nom_g}}</option>
                       @endforeach

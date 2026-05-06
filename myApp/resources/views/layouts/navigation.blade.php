@@ -16,6 +16,15 @@
                 <li class="nav-item">
                     <a href="{{route('inscription.index')}}" class="nav-link">Inscription</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('absences.index')}}" class="nav-link">Absences</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('comportement.index')}}" class="nav-link">Comportement</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{route('listAbsences.index')}}" class="nav-link">ListAbsences</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->
