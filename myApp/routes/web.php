@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AbsenceController;
+use App\Http\Controllers\BacController;
 use App\Http\Controllers\ComportementController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\ListAbsenceController;
@@ -56,7 +57,21 @@ Route::controller(ComportementController::class)->group(function(){
 
 Route::controller(ListAbsenceController::class)->group(function(){
     Route::get('/listAbsences','index')->name('listAbsences.index');
+    // Route::get('/listAbsences', 'newIndex')->name('listAbsences.newIndex');
+
     Route::post('/listAbsences','store')->name('listAbsences.store');
+    Route::get('/listAbsences/modifie','modifie')->name('listAbsences.edit');
+});
+
+Route::controller(BacController::class)->group(function(){
+
+    Route::get('/retraitBac','index')->name('retraitBac.index');
+    Route::get('/retraitBac/create', 'create')->name('retraitBac.create');
+    Route::post('/retraitBac', 'store')->name('retraitBac.store');
+    Route::get('/retraitBac/{id}/edit', 'edit')->name('retraitBac.edit');
+    Route::put('/retraitBac/{id}', 'update')->name('retraitBac.update');
+    Route::delete('/retraitBac/{id}', 'destroy')->name('retraitBac.destroy');
+    
 });
 
 require __DIR__.'/auth.php';

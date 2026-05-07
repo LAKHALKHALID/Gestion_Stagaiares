@@ -22,9 +22,14 @@
                 <li class="nav-item">
                     <a href="{{route('comportement.index')}}" class="nav-link">Comportement</a>
                 </li>
+                
                 <li class="nav-item">
                     <a href="{{route('listAbsences.index')}}" class="nav-link">ListAbsences</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('retraitBac.index')}}" class="nav-link">Retrait Bac</a>
+                </li>
+                
             </ul>
 
             <!-- Right Side Of Navbar -->

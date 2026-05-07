@@ -9,18 +9,18 @@
             <div class="row">
                 <div class="col-md-5 d-flex gap-3">
                     <label for="">Groupe : </label>
-                    <input type="text" name="groupe" class="form-control" required>
+                    <input type="text" name="groupe" value="{{ request('groupe') }}" class="form-control" required>
                 </div>
                 <div class="col-md-5 d-flex gap-3">
                     <label for="">Début de la semaine : </label>
-                    <input type="date" name="date" class="form-control" required>
+                    <input type="date" name="date" class="form-control" value="{{ request('date') }}" required>
                 </div>
                 <div class="col-md-2 d-flex justify-content-center align-items-center">
                     <input type="submit" value="Search" class="btn btn-success">
                 </div>
             </div>
         </form>
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show" role="alert">
                 {{ session('success') }}
 
@@ -87,48 +87,74 @@
                             <th>di</th>
                         </tr>
                     </thead>
-                    @if ($st != '')
-                    <form action="{{route('listAbsences.store')}}" method="post">
-                      @csrf
-                          <tbody>
-                              @foreach ($st as $s)
-                              @php
-                                $fullName = $s->nom_francais . ' ' . $s->prenom_francais
-                              @endphp
-                                  <tr>
-                                    <td class="text-start ">{{ strtoupper($fullName) }}</td>
+                    @if ($stagiaires != '')
 
-                                      <!-- 24 cells -->
-                                      {{-- 1 --}}
-                                      @for ($i = 0; $i < 6; $i++)
-                                      @php
-                                          $date = $startOfWeek->copy()->addDays($i)->format('Y-m-d');
-                                      @endphp
-                                          <td><input type="checkbox" value="8h30-11h00" name="absences[{{ $s->cef }}][{{ $date }}][]"></td>
-                                          <td><input type="checkbox" value="11h00-13h30" name="absences[{{ $s->cef }}][{{ $date }}][]"></td>
-                                          <td><input type="checkbox" value="13h30-16h00" name="absences[{{ $s->cef }}][{{ $date }}][]"></td>
-                                          <td>
-                                              <input type="checkbox" value="16h00-18h30" name="absences[{{ $s->cef }}][{{ $date }}][]">
-                                              
-                                          </td>
-                                      @endfor
+                        <form action="{{ route('listAbsences.store') }}" method="post">
+                            @csrf
+                            <tbody>
+                                @foreach ($stagiaires as $stagiaire)
+                                    @php
+                                        $absencesByDate = [];
 
-                                      <td class="">{{$s->cef}}</td>
-                                  </tr>
-                              @endforeach
+                                        foreach ($stagiaire->absences as $absence) {
+                                            $seances = array_map('trim', explode(';', $absence->seance));
 
-                          </tbody>
-                          <tfoot>
-                            <tr>
-                              <td>
+                                            foreach ($seances as $seance) {
+                                                $absencesByDate[$absence->date][] = $seance;
+                                            }
+                                        }
+                                    @endphp
+                                    @php
+                                        $fullName = $stagiaire->nom_francais . ' ' . $stagiaire->prenom_francais;
+                                    @endphp
+                                    <tr>
+                                        <td class="text-start ">{{ strtoupper($fullName) }}</td>
 
-                                  <input type="submit" value="Save" class="btn btn-success">
-                              </td>
-                            </tr>
-                          </tfoot>
-                          <input type="hidden" name="start_date" value="{{ request('date') }}">
-                    </form>
-                      
+                                        <!-- 24 cells -->
+                                        {{-- 1 --}}
+                                        @for ($i = 0; $i < 6; $i++)
+                                            @php
+                                                $date = $startOfWeek->copy()->addDays($i)->format('Y-m-d');
+                                                $seances = $absencesByDate[$date] ?? [];
+                                            @endphp
+                                            <input type="hidden"
+                                        name="all_dates[{{$stagiaire->cef}}][]"
+                                        value="{{$date}}">
+
+                                            <td><input type="checkbox" value="8h30-11h00"
+                                                    name="absences[{{ $stagiaire->cef }}][{{ $date }}][]"
+                                                    {{ in_array('8h30-11h00', $seances) ? 'checked' : '' }}></td>
+                                            <td><input type="checkbox" value="11h00-13h30"
+                                                    name="absences[{{ $stagiaire->cef }}][{{ $date }}][]"
+                                                    {{ in_array('11h00-13h30', $seances) ? 'checked' : '' }}></td>
+                                            <td><input type="checkbox" value="13h30-16h00"
+                                                    name="absences[{{ $stagiaire->cef }}][{{ $date }}][]"
+                                                    {{ in_array('13h30-16h00', $seances) ? 'checked' : '' }}></td>
+                                            <td>
+                                                <input type="checkbox" value="16h00-18h30"
+                                                    name="absences[{{ $stagiaire->cef }}][{{ $date }}][]"
+                                                    {{ in_array('16h00-18h30', $seances) ? 'checked' : '' }}>
+                                            </td>
+                                        @endfor
+
+                                        <td class="">{{ $stagiaire->cef }}</td>
+                                    </tr>
+                                    
+                                @endforeach
+
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td>
+
+                                        <input type="submit" value="Save" class="btn btn-success">
+                                    </td>
+                                </tr>
+                            </tfoot>
+                            <input type="hidden" name="start_date" value="{{ request('date') }}">
+                            <input type="hidden" name="group_name" value="{{ request('groupe') }}">
+                        </form>
+
                     @endif
 
 
