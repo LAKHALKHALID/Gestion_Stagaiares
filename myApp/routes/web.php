@@ -3,6 +3,7 @@
 use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\BacController;
 use App\Http\Controllers\ComportementController;
+use App\Http\Controllers\DeperditionController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\ListAbsenceController;
 use App\Http\Controllers\ProfileController;
@@ -72,6 +73,14 @@ Route::controller(BacController::class)->group(function(){
     Route::put('/retraitBac/{id}', 'update')->name('retraitBac.update');
     Route::delete('/retraitBac/{id}', 'destroy')->name('retraitBac.destroy');
     
+});
+
+Route::controller(DeperditionController::class)->group(function(){
+    Route::get('/deperditions','index')->name('deperditions.index');
+    Route::get('/deperditions/create', 'create')->name('deperditions.create');
+    Route::get('/deperditions/{id}/edit', 'edit')->name('deperditions.edit');
+    Route::post('/deperditions','store')->name('deperditions.store');
+    Route::put('/deperditions/{id}', 'update')->name('deperditions.update');
 });
 
 require __DIR__.'/auth.php';

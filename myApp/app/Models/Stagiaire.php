@@ -58,4 +58,9 @@ class Stagiaire extends Model
     public function bac():HasOne{
         return $this->hasOne(Bac::class,'stagiaire_id','cef');
     }
+
+    public function deperditions()
+    {
+        return $this->hasMany(Deperdition::class, 'stagiaire_id', 'cef');
+    }
 }

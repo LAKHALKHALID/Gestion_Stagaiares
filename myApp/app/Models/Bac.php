@@ -17,6 +17,7 @@ class Bac extends Model
         'piece_justification',
         'date_retrait',
         'date_retour',
+        'is_returned'
     ];
 
     public function stagiaire():BelongsTo

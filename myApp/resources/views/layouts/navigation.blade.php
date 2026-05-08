@@ -29,6 +29,9 @@
                 <li class="nav-item">
                     <a href="{{route('retraitBac.index')}}" class="nav-link">Retrait Bac</a>
                 </li>
+                <li class="nav-item">
+                    <a href="{{route('deperditions.index')}}" class="nav-link">Deperdition</a>
+                </li>
                 
             </ul>
 

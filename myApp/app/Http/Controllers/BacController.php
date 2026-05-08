@@ -11,9 +11,17 @@ class BacController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $retraitBacs = Bac::all();
+        // if($request->is_returned) return $request;
+        if($request->is_returned && $request->id ){
+            $is_returned = (int) $request->is_returned;
+            $retraitBacs = Bac::find($request->id);
+            $retraitBacs->update([
+                'is_returned'=>1
+            ]);
+        }
+        $retraitBacs = Bac::where('is_returned',0)->get();
         return view('retraitBac.index',compact('retraitBacs'));
     }
 
@@ -72,8 +80,11 @@ class BacController extends Controller
      */
     public function destroy(string $id)
     {
-        $bac = Bac::find($id);
-        $bac->delete();
-        return redirect()->route('retraitBac.index')->with('success', 'Deleted avec succée ');
+        
+        // $bac = Bac::find($id);
+        // $bac->delete();
+        // return redirect()->route('retraitBac.index')->with('success', 'Deleted avec succée ');
+
+
     }
 }

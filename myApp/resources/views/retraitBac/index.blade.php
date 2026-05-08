@@ -44,13 +44,21 @@
                   <td>{{$item->date_retour}}</td>
                   <td class="d-flex gap-2">
                     <a href="{{route('retraitBac.edit',['id'=>$item->id])}}" class="btn btn-success">Edit</a>
-                    {{-- <a href="" class="btn btn-danger">Delete</a> --}}
-                    <form action="{{route('retraitBac.destroy',['id'=>$item->id])}}" method="POST">
-                      @csrf
-                      @method('delete')
-                      <input type="submit" value="Delete"  class="btn btn-danger"
-                      onclick="return confirm('Are you sure you want to delete this item ?')">
+                    <form action="{{ route('retraitBac.index') }}" method="GET">
+                        <div class="form-check form-switch d-flex align-items-center">
+
+                            <input class="form-check-input"
+                                  type="checkbox"
+                                  name="is_returned"
+                                  value="1"
+                                  {{ $item->is_returned ? 'checked' : '' }}
+                                  onclick="return confirm('Are you sure this Stagiaire returned the Bac?')"
+                                  onchange="this.form.submit()">
+
+                        </div>
+                        <input type="hidden" name="id" value="{{$item->id}}">
                     </form>
+                    
 
                   </td>
                 </tr>
@@ -58,4 +66,7 @@
         </tbody>
       </table>
     </div>
+  
+
+
 @endsection
