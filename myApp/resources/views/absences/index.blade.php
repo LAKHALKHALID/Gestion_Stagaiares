@@ -47,7 +47,7 @@
             <tbody>
                 @if (count($absences) > 0)
                     @foreach ($absences as $ab)
-                        <tr class=" {{ $ab->justification == 'jutifiée' ? 'table-success' : '' }}">
+                        <tr class=" {{ $ab->justification == 'justifiée' ? 'table-success' : '' }} ">
                             <td>{{ $ab->id }}</td>
                             <td>{{ $ab->status }}</td>
                             <td>{{ $ab->seance }}</td>

@@ -104,7 +104,7 @@
               <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           </div>
         @endif
-    <form action="{{ route('comportement.store') }}" method="POST">
+    <form action="{{ route('comportements.store') }}" method="POST">
         @csrf
 
         {{-- MOTIF + CEF --}}
@@ -289,8 +289,9 @@
 
             <input type="date"
                    name="date"
+                   required
                    class="form-control">
-
+                  
         </fieldset>
 
         <button class="btn btn-primary">

@@ -27,7 +27,7 @@
 
                 <div class="row">
 
-                    <div class="col-md-4">
+                    {{-- <div class="col-md-4">
                         <select name="niveau" class="form-control" onchange="this.form.submit()">
 
                             <option value="">-- Tous les niveaux --</option>
@@ -43,8 +43,8 @@
                             </option>
 
                         </select>
-                        {{-- Nb: <span class="badge bg-primary">{{ $nb }}</span> --}}
-                    </div>
+                        Nb: <span class="badge bg-primary">{{ $nb }}</span>
+                    </div> --}}
 
                     <div class="col-md-4">
                         <select name="mode_f" class="form-control" onchange="this.form.submit()">
@@ -76,7 +76,6 @@
                     <thead class="table-dark">
                         <tr>
                             <th>Code</th>
-                            <th>Niveau</th>
                             <th>Mode</th>
                             <th>Français</th>
                             <th>Arabe</th>
@@ -88,19 +87,17 @@
                         @forelse($filieres as $f)
                             <tr>
                                 <td>{{ $f->code_f }}</td>
-                                <td>{{ $f->niveau }}</td>
-                                <td>{{ $f->mode_f }}</td>
+                                <td>{{ $f->mode_formation }}</td>
                                 <td>{{ $f->nom_filiere_francais }}</td>
                                 <td dir="rtl">{{ $f->nom_filiere_arabe }}</td>
-
                                 <td>
                                     <a href="{{ route('filiers.show', $f->code_f) }}"
-                                       class="btn btn-info btn-sm">
+                                        class="btn btn-info btn-sm">
                                         Show
                                     </a>
 
                                     <a href="{{ route('filiers.edit', $f->code_f) }}"
-                                       class="btn btn-warning btn-sm">
+                                        class="btn btn-warning btn-sm">
                                         Edit
                                     </a>
 

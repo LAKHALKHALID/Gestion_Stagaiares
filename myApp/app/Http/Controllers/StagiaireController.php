@@ -16,6 +16,9 @@ class StagiaireController extends Controller
         $f = Filiere::all();
 
         // dd($req->code_f);
+        // if($req){
+        //     return $req;
+        // }
 
         if($req->cef !== null ){
                 $stagiaires =  Stagiaire::where('cef',$req->cef)->get();

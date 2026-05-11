@@ -17,15 +17,15 @@
                 @csrf
                 <div class="mb-3">
                     <label class="form-label fw-bold">Code</label>
-                    <input type="text" name="code_f"
-                           value="{{ old('code_f') }}"
-                           class="form-control @error('code_f') is-invalid @enderror"
-                           placeholder="Code">
+                        <input type="text" name="code_f"
+                            value="{{ old('code_f') }}"
+                            class="form-control @error('code_f') is-invalid @enderror"
+                            placeholder="Code">
                     @error('code_f')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label class="form-label fw-bold">Niveau</label>
                     <select name="niveau"
                             class="form-select @error('niveau') is-invalid @enderror">
@@ -44,34 +44,34 @@
                     @error('niveau')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> --}}
                 <div class="mb-3">
                     <label class="form-label fw-bold">Mode de formation</label>
-                    <select name="mode_f"
+                    <select name="mode_formation"
                             class="form-select @error('mode_f') is-invalid @enderror">
                         <option value="">Choisir mode de formation</option>
 
                         <option value="Qualifiant"
-                            {{ old('mode_f') == 'Qualifiant' ? 'selected' : '' }}>
+                            {{ old('mode_formation') == 'Qualifiant' ? 'selected' : '' }}>
                             Qualifiant
                         </option>
 
                         <option value="Diploma"
-                            {{ old('mode_f') == 'Diploma' ? 'selected' : '' }}>
+                            {{ old('mode_formation') == 'Diploma' ? 'selected' : '' }}>
                             Diploma
                         </option>
                     </select>
-                    @error('mode_f')
+                    @error('mode_formation')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>
                 
-               
+            
                 <div class="mb-3">
                     <label class="form-label fw-bold">Nom (Français)</label>
-                    <input type="text" name="nom_filiere_francais"
-                           value="{{ old('nom_filiere_francais') }}"
-                           class="form-control @error('nom_filiere_francais') is-invalid @enderror">
+                        <input type="text" name="nom_filiere_francais"
+                            value="{{ old('nom_filiere_francais') }}"
+                            class="form-control @error('nom_filiere_francais') is-invalid @enderror">
                     @error('nom_filiere_francais')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

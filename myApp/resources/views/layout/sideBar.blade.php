@@ -4,7 +4,7 @@
 				<div class="sidebar-content">
 					<ul class="nav">
 						<li class="nav-item active">
-							<a href="/">
+							<a href="/dashboard">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
 								<span class="badge badge-count">5</span>

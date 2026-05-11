@@ -14,11 +14,8 @@ class FiliersController extends Controller
     public function index(Request $req)
     {
         $query = Filiere::query()
-        ->when($req->niveau,function($query) use ($req){
-            $query->where('niveau',$req->niveau);
-        })
         ->when($req->mode_f,function($query) use ($req){
-            $query->where('mode_f',$req->mode_f);
+            $query->where('mode_formation',$req->mode_f);
         });
         $nb = $query->count();
         $filieres = $query->get();
@@ -39,31 +36,12 @@ class FiliersController extends Controller
     public function store(Request $req)
     {
         $req->validate([
-        'code_f' => 'required|string|unique:filieres,code_f',
-        'niveau' => 'required',
-        'mode_f' => 'required',
-        'nom_filiere_francais' => ['required', 'regex:/^[\p{L}\s\-\']+$/u'],
-        'nom_filiere_arabe' => 'required|regex:/^[\p{Arabic}\s]+$/u',
-        ], [
-        'code_f.unique' => 'Le code de la filière est déja exists.',
-        'code_f.required' => 'Le code de la filière est obligatoire.',
-        'code_f.string' => 'Le code de la filière doit être une chaîne de caractères.',
-        'niveau.required' => 'Le niveau est obligatoire.',
-        'mode_f.required' => 'Le mode formation est obligatoire.',
-        'nom_filiere_francais.required' => 'Le nom de la filière en français est obligatoire.',
-        'nom_filiere_francais.regex' => 'Le nom en français doit contenir uniquement des lettres.',
-        'nom_filiere_arabe.required' => 'اسم الشعبة بالعربية إجباري.',
-        'nom_filiere_arabe.regex' => 'اسم الشعبة بالعربية يجب أن يحتوي فقط على حروف عربية.',
+        'code_f' => 'required|',
+        'mode_formation' => 'required',
+        'nom_filiere_francais' => 'required', 
+        'nom_filiere_arabe' => 'required',
         ]);
-        Filiere::create($req->only([
-            'code_f',
-            'niveau',
-            'mode_f',
-            'desc',
-            'secteur',
-            'nom_filiere_francais',
-            'nom_filiere_arabe',
-        ]));
+        Filiere::create($req->all());
         return to_route('filiers.index')->with('success','Filière ajoutée avec succès');
     }
 
@@ -90,23 +68,22 @@ class FiliersController extends Controller
      */
     public function update(Request $req, Filiere $filiere)
 {
-    $validated = $req->validate([
-        'niveau' => 'required',
-        'mode_f' => 'required',
-        'desc' => 'nullable|string',
-        'secteur' => 'nullable|string',
-        'nom_filiere_francais' => 'required|regex:/^[\p{L}\s]+$/u',
-        'nom_filiere_arabe' => 'required|regex:/^[\p{Arabic}\s]+$/u',
-    ], [
-        'niveau.required' => 'Le niveau est obligatoire.',
-        'mode_f.required' => 'Le mode de formation est obligatoire.',
-        'nom_filiere_francais.required' => 'Le nom en français est obligatoire.',
-        'nom_filiere_francais.regex' => 'Le nom en français doit contenir uniquement des lettres.',
-        'nom_filiere_arabe.required' => 'اسم الشعبة بالعربية إجباري.',
-        'nom_filiere_arabe.regex' => 'اسم الشعبة بالعربية يجب أن يحتوي فقط على حروف عربية.',
-    ]);
+        // $validated = $req->validate([
+        //     'niveau' => 'required',
+        //     'mode_formation' => 'required',
+        //     'desc' => 'nullable|string',
+        //     'secteur' => 'nullable|string',
+        //     'nom_filiere_francais' => 'required|regex:/^[\p{L}\s]+$/u',
+        //     'nom_filiere_arabe' => 'required|regex:/^[\p{Arabic}\s]+$/u',
+        // ]);
+        $req->validate([
+            'code_f' => 'required|',
+            'mode_formation' => 'required',
+            'nom_filiere_francais' => 'required',
+            'nom_filiere_arabe' => 'required',
+        ]);
 
-    $filiere->update($validated);
+    $filiere->update($req->all());
 
     return to_route('filiers.index')
         ->with('success', 'Filière mise à jour avec succès');

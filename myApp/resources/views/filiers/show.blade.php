@@ -17,14 +17,14 @@
                 <div class="col-md-8">{{ $filiere->code_f }}</div>
             </div>
 
-            <div class="row mb-3">
+            {{-- <div class="row mb-3">
                 <div class="col-md-4 fw-bold text-muted">Niveau :</div>
                 <div class="col-md-8">
                     <span class="badge bg-info text-dark px-3 py-2">
                         {{ $filiere->niveau }}
                     </span>
                 </div>
-            </div>
+            </div> --}}
 
             <div class="row mb-3">
                 <div class="col-md-4 fw-bold text-muted">Mode de formation :</div>

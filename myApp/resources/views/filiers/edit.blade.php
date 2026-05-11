@@ -23,7 +23,7 @@
                            class="form-control bg-light">
                 </div>
 
-                <div class="mb-3">
+                {{-- <div class="mb-3">
                     <label class="form-label fw-bold">Niveau</label>
                     <select name="niveau"
                             class="form-select @error('niveau') is-invalid @enderror">
@@ -40,7 +40,7 @@
                     @error('niveau')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
-                </div>
+                </div> --}}
                 <div class="mb-3">
                     <label class="form-label fw-bold">Mode de formation</label>
                     <select name="mode_f"
@@ -48,12 +48,12 @@
                         <option value="">Choisir mode de formation</option>
 
                         <option value="Qualifiant"
-                            {{ old('mode_f',$filiere->mode_f) == 'Qualifiant' ? 'selected' : '' }}>
+                            {{ old('mode_formation',$filiere->mode_formation) == 'Qualifiant' ? 'selected' : '' }}>
                             Qualifiant
                         </option>
 
                         <option value="Diploma"
-                            {{ old('mode_f',$filiere->mode_f) == 'Diploma' ? 'selected' : '' }}>
+                            {{ old('mode_formation',$filiere->mode_formation) == 'Diploma' ? 'selected' : '' }}>
                             Diploma
                         </option>
                     </select>

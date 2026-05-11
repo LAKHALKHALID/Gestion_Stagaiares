@@ -30,7 +30,7 @@ Route::middleware('auth')->group(function () {
     // Route::resource('groupes', GroupesController::class);
 });
 
-Route::controller(FiliersController::class)->group(function(){
+Route::middleware(['auth'])->controller(FiliersController::class)->group(function(){
     Route::get('/filiers','index')->name('filiers.index');
     Route::get('/filiers/create','create')->name('filiers.create');
     Route::post('/filiers', 'store')->name('filiers.store');
@@ -41,7 +41,7 @@ Route::controller(FiliersController::class)->group(function(){
     Route::delete('/filiers/{code_f}', 'destroy')->name('filiers.destroy');
 });
 
-Route::controller(GroupesController::class)->group(function () {
+Route::middleware(['auth'])->controller(GroupesController::class)->group(function () {
     Route::get('/groupes', 'index')->name('groupes.index');
     Route::get('/groupes/create', 'create')->name('groupes.create');
     Route::post('/groupes', 'store')->name('groupes.store');
@@ -52,7 +52,7 @@ Route::controller(GroupesController::class)->group(function () {
     Route::delete('/groupes/{code_g}', 'destroy')->name('groupes.destroy');
 });
 
-Route::controller(StagiaireController::class)->group(function(){
+Route::middleware(['auth'])->controller(StagiaireController::class)->group(function(){
     Route::get('/stagiaires','index')->name('stagiaires.index');
     Route::get('/stagiaires/create', 'create')->name('stagiaires.create');
     Route::post('/stagiaires','store')->name('stagiaires.store');
@@ -62,12 +62,12 @@ Route::controller(StagiaireController::class)->group(function(){
     Route::delete('/stagiaires/{cef}', 'destroy')->name('stagiaires.destroy');
 });
 
-Route::controller(InscriptionController::class)->group(function(){
+Route::middleware(['auth'])->controller(InscriptionController::class)->group(function(){
     Route::get('/inscription','index')->name('inscription.index');
     Route::post('/inscription','store')->name('inscription.store');
 });
 
-Route::controller(AbsenceController::class)->group(function(){
+Route::middleware(['auth'])->controller(AbsenceController::class)->group(function(){
 
     Route::get('/absences','index')->name('absences.index');
     Route::get('/absences/create', 'create')->name('absences.create');
@@ -76,7 +76,7 @@ Route::controller(AbsenceController::class)->group(function(){
     Route::put('/absences/{id}', 'update')->name('absences.update');
 });
 
-Route::controller(ComportementController::class)->group(function(){
+Route::middleware(['auth'])->controller(ComportementController::class)->group(function(){
 
     Route::get('/comportements','index')->name('comportements.index');
     Route::get('/comportements/create', 'create')->name('comportements.create');
@@ -85,7 +85,7 @@ Route::controller(ComportementController::class)->group(function(){
     Route::put('/comportements/{id}', 'update')->name('comportements.update');
 });
 
-Route::controller(ListAbsenceController::class)->group(function(){
+Route::middleware(['auth'])->controller(ListAbsenceController::class)->group(function(){
     Route::get('/listAbsences','index')->name('listAbsences.index');
     // Route::get('/listAbsences', 'newIndex')->name('listAbsences.newIndex');
 
@@ -93,7 +93,7 @@ Route::controller(ListAbsenceController::class)->group(function(){
     Route::get('/listAbsences/modifie','modifie')->name('listAbsences.edit');
 });
 
-Route::controller(BacController::class)->group(function(){
+Route::middleware(['auth'])->controller(BacController::class)->group(function(){
 
     Route::get('/retraitBac','index')->name('retraitBac.index');
     Route::get('/retraitBac/create', 'create')->name('retraitBac.create');
@@ -104,7 +104,7 @@ Route::controller(BacController::class)->group(function(){
     
 });
 
-Route::controller(DeperditionController::class)->group(function(){
+Route::middleware(['auth'])->controller(DeperditionController::class)->group(function(){
     Route::get('/deperditions','index')->name('deperditions.index');
     Route::get('/deperditions/create', 'create')->name('deperditions.create');
     Route::get('/deperditions/{id}/edit', 'edit')->name('deperditions.edit');
@@ -112,7 +112,7 @@ Route::controller(DeperditionController::class)->group(function(){
     Route::put('/deperditions/{id}', 'update')->name('deperditions.update');
 });
 
-Route::controller(EngagementController::class)->group(function(){
+Route::middleware(['auth'])->controller(EngagementController::class)->group(function(){
     Route::get('/engagements','index')->name('engagements.index');
     Route::get('/engagements/create', 'create')->name('engagements.create');
     Route::post('/engagements', 'store')->name('engagements.store');
