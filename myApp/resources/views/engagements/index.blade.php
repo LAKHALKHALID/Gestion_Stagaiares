@@ -22,11 +22,18 @@
         <tbody>
               @foreach ($engagements as $item)
                   <tr>
-                    <td>{{$item->id}}</td>
+                    <td>{{$item->stagiaire_id}}</td>
                     <td>{{$item->motif}}</td>
                     <td>{{$item->date}}</td>
-                    <td>
+                    <td class="d-flex gap-2">
                       <a href="{{route('engagements.edit',['id'=>$item->id])}}" class="btn btn-success btn-sm">Edit</a>
+                      <form action="{{route('engagements.destroy',['id'=>$item->id])}}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button 
+                        onclick="return confirm('Are you sure you want to delete this stagiaire ?')"
+                        class="btn btn-danger btn-sm">Supp</button>
+                      </form>
                     </td>
                   </tr>
               @endforeach

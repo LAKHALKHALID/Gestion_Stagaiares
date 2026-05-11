@@ -58,7 +58,7 @@
     @yield("js_script")
 
     <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
-
+    <script src="{{ asset('assets/js/JsBarcode.all.min.js') }}"></script>
     <script src="{{ asset('assets/js/ready.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>

@@ -24,6 +24,12 @@
 							</a>
 						</li>
 						<li class="nav-item">
+							<a href="{{route('stagiaires.badge')}}">
+								<span class="letter-icon">Ba</span>
+								<p>Badges</p>
+							</a>
+						</li>
+						<li class="nav-item">
 							<a href="{{route('retraitBac.index')}}">
 								<span class="letter-icon">B</span>
 								<p>Bac</p>

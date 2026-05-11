@@ -54,12 +54,14 @@ Route::middleware(['auth'])->controller(GroupesController::class)->group(functio
 
 Route::middleware(['auth'])->controller(StagiaireController::class)->group(function(){
     Route::get('/stagiaires','index')->name('stagiaires.index');
+    Route::get('/stagiaires/badges', 'badge')->name('stagiaires.badge');
     Route::get('/stagiaires/create', 'create')->name('stagiaires.create');
     Route::post('/stagiaires','store')->name('stagiaires.store');
     Route::get('/stagiaires/{cef}', 'show')->name('stagiaires.show');
     Route::get('/stagiaires/{cef}/edit', 'edit')->name('stagiaires.edit');
     Route::put('/stagiaires/{cef}', 'update')->name('stagiaires.update');
     Route::delete('/stagiaires/{cef}', 'destroy')->name('stagiaires.destroy');
+
 });
 
 Route::middleware(['auth'])->controller(InscriptionController::class)->group(function(){
@@ -118,6 +120,7 @@ Route::middleware(['auth'])->controller(EngagementController::class)->group(func
     Route::post('/engagements', 'store')->name('engagements.store');
     Route::get('/engagements/{id}/edit', 'edit')->name('engagements.edit');
     Route::put('/engagements/{id}', 'update')->name('engagements.update');
+    Route::delete('/engagements/{id}', 'destroy')->name('engagements.destroy');
 });
 
 require __DIR__.'/auth.php';

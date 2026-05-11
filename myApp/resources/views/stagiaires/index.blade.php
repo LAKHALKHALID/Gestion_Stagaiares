@@ -77,7 +77,7 @@
                 <td>{{$st->annee_etude}}</td>
                 <td>{{$st->nom_annee_scolaire}}</td>
                 <td>{{$st->niveau_formation}}</td>
-                <td class="d-flex gap-3">
+                <td class="d-flex gap-1">
                   <a href="{{route('stagiaires.show',['cef'=>$st->cef])}}" class="btn btn-sm btn-primary">show</a>
                   <a href="{{route('stagiaires.edit',['cef'=>$st->cef])}}" class="btn btn-sm btn-success mx-2">edit</a>
                   

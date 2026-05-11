@@ -50,6 +50,21 @@ class StagiaireController extends Controller
         return view('stagiaires.create');
     }
 
+    public function badge(Request $request){
+        if($request->cef != null){
+            $stagiaires = Stagiaire::where('cef',$request->cef)->get();
+            
+        }
+        elseif($request->groupe){
+            $groupe = Groupe::where('nom_g', $request->groupe)->first();
+            $stagiaires = $groupe->stagiaires;
+        }
+        else{
+            $stagiaires = [];
+        }
+        return view('stagiaires.badge',compact('stagiaires'));
+    }
+
     /**
      * Store a newly created resource in storage.
      */
