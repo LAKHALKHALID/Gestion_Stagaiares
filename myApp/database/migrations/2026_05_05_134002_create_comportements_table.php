@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('autorite_dec',30);
             $table->string('miseEnGarde', 30);
             $table->string('motife', 50);
+            $table->date('date');
+
             $table->timestamps();
         });
     }

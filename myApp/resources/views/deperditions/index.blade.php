@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layout.app')
 
-@section('title','index')
+{{-- @section('title','index') --}}
 @php
 use App\Models\Stagiaire;
 @endphp
@@ -36,7 +36,7 @@ use App\Models\Stagiaire;
 
       </form>
       </div>
-        <table class="table table-hover table-bordered text-center">
+        <table class="table table-bordered table-head-bg-info table-bordered-bd-info">
           <thead>
             <tr>
               <th>ID</th>

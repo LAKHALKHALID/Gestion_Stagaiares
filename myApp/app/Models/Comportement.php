@@ -11,6 +11,7 @@ class Comportement extends Model
         'stagiaire_id',
         'sanction',
         'autorite_dec',
+        'date',
         'miseEnGarde',
         'motife',
     ];

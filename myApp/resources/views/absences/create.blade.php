@@ -1,9 +1,29 @@
-@extends('layouts.app')
+@extends('layout.app')
+
 
 @section('title','create')
 
 
 @section('content')
+<style>
+.form-checkl-new{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.form-check-inputl-new{
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.form-check-label-new{
+    font-size: 16px;
+    cursor: pointer;
+}
+</style>
 <div class="container mt-4">
 
     <div class="card shadow-sm border-0">
@@ -18,6 +38,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
                 @endif
+                
             <form action="{{ route('absences.store') }}" method="POST">
                 @csrf
 
@@ -42,36 +63,37 @@
                     <div class="row">
 
                         <div class="col-md-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="seance[]" value="8h30-11h00" id="s1">
-                                <label class="form-check-label" for="s1">
+                            <div class="form-checkl-new">
+                                <input class="form-check-inputl-new" type="checkbox" name="seance[]" value="8h30-11h00" id="s1">
+                                <label class="form-check-labell-new" for="s1">
                                     8h30 - 11h00
                                 </label>
                             </div>
                         </div>
+                        
 
                         <div class="col-md-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="seance[]" value="11h00-13h30" id="s2">
-                                <label class="form-check-label" for="s2">
+                            <div class="form-check-new">
+                                <input class="form-check-input-new" type="checkbox" name="seance[]" value="11h00-13h30" id="s2">
+                                <label class="form-check-label-new" for="s2">
                                     11h00 - 13h30
                                 </label>
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="seance[]" value="13h30-16h00" id="s3">
-                                <label class="form-check-label" for="s3">
+                            <div class="form-check-new">
+                                <input class="form-check-input-new" type="checkbox" name="seance[]" value="13h30-16h00" id="s3">
+                                <label class="form-check-label-new" for="s3">
                                     13h30 - 16h00
                                 </label>
                             </div>
                         </div>
 
                         <div class="col-md-3">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="seance[]" value="16h00-18h30" id="s4">
-                                <label class="form-check-label" for="s4">
+                            <div class="form-check-new">
+                                <input class="form-check-input-new" type="checkbox" name="seance[]" value="16h00-18h30" id="s4">
+                                <label class="form-check-label-new" for="s4">
                                     16h00 - 18h30
                                 </label>
                             </div>

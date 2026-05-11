@@ -31,40 +31,49 @@ class ComportementController extends Controller
      */
     public function store(Request $req)
     {
-        $ct = new Comportement();
-        $ct->sanction = $req->sanction;
-        $ct->autorite_dec=$req->autorite_dec;
-        $ct->miseEnGarde=$req->miseEnGarde;
-        $ct->motife = $req->motif;
-        $ct->stagiaire_id = $req->cef;
-        $ct->created_at = $req->date;
-        $ct->updated_at = null;
-        $ct->save();
-        // dd($ct->miseEnGarde);
-        $st = Stagiaire::find($req->cef);
+        // return $req;
+        $stagiaire = Stagiaire::find($req->cef);
 
-        $transaction = new Transaction();
-        $transaction->stagiaire_id = $st->cef;
-        $transaction->motif = 'C';
-        
-        if($ct->miseEnGarde == '1ère Mise en garde'){
-            $transaction->note = 1;
+        if($stagiaire){
+
+            $ct = new Comportement();
+            $ct->sanction = $req->sanction;
+            $ct->autorite_dec = $req->autorite_dec;
+            $ct->miseEnGarde = $req->miseEnGarde;
+            $ct->motife = $req->motif;
+            $ct->date = $req->date;
+
+            $ct->stagiaire_id = $req->cef;
+            $ct->created_at = $req->date;
+            $ct->updated_at = null;
+            $ct->save();
+            $transaction = new Transaction();
+            $transaction->stagiaire_id = $stagiaire->cef;
+            $transaction->motif = 'C';
+
+            if ($ct->miseEnGarde == '1ère Mise en garde') {
+                $transaction->note = 1;
+            } elseif ($ct->miseEnGarde == '2ème Mise en garde') {
+                $transaction->note = 2;
+            } elseif ($ct->miseEnGarde == '3ème Mise en garde') {
+                $transaction->note = 3;
+            } elseif ($ct->miseEnGarde == '4ème Mise en garde') {
+                $transaction->note = 4;
+            } else {
+                $transaction->note = 5;
+            }
+            $transaction->save();
+
+            return redirect()->route('comportements.index')->with('success','Ajouter Comportement avec succée');
+
         }
-        elseif($ct->miseEnGarde == '2ème Mise en garde'){
-            $transaction->note = 2;
-        } 
-        elseif ($ct->miseEnGarde == '3ème Mise en garde') {
-            $transaction->note = 3;
-        } 
-        elseif ($ct->miseEnGarde == '4ème Mise en garde') {
-            $transaction->note = 4;
-        }
-        else{
-            $transaction->note = 5;
-        }
-        $transaction->save();
-        $st->save();
-        return to_route('comportement.index');
+        return redirect()->route('comportements.create')->with('error', 'C\'est CEF de Stagiaire ne pas exist ');
+
+
+
+        // dd($ct->miseEnGarde);
+
+
     }
 
     /**
@@ -78,9 +87,11 @@ class ComportementController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Comportement $comportement)
+    public function edit(string $id)
     {
-        //
+        $comportement = Comportement::findOrFail($id);
+
+        return view('comportements.edit', compact('comportement'));
     }
 
     /**

@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layout.app')
 
 @section('content')
 <div class="container py-4">
@@ -19,7 +19,7 @@
             <!-- Avatar + Name -->
             <div class="col-md-6 d-flex align-items-center gap-3">
                 <img src="https://ui-avatars.com/api/?name={{ $stagiaire->prenom_francais }}+{{ $stagiaire->nom_francais }}&size=100"
-                      class="rounded-circle" />
+                    class="rounded-circle" />
 
                 <div>
                     <h4 class="mb-1">

@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layout.app')
 
-@section('title','Edit Bac')
+{{-- @section('title','Edit Bac') --}}
 
 @section('content')
 

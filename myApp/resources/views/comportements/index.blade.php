@@ -1,11 +1,17 @@
-@extends('layouts.app')
+@extends('layout.app')
 
-@section('title','index')
+{{-- @section('title','index') --}}
     
 @section('content')
     <div class="container">
-      <a href="{{route('comportement.create')}}" class="btn btn-primary">Ajouter</a>
-      <table class="table table-hover text-center">
+      @if (session('success'))
+          <div class="alert alert-success alert-dismissible fade show" role="alert">
+              {{ session('success') }}
+              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        @endif
+      <a href="{{route('comportements.create')}}" class="btn btn-primary my-3">Ajouter</a>
+      <table  class="table table-bordered table-head-bg-info table-bordered-bd-info">
         <thead>
           <tr>
             <th>Full Name</th>
@@ -27,6 +33,9 @@
                 <td>{{$c->autorite_dec}}</td>
                 <td>{{$c->miseEnGarde}}</td>
                 <td>{{$c->created_at}}</td>
+                <td>
+                  <a href="{{route('comportements.edit',['id'=>$c->id])}}" class="btn btn-success btn-sm">Edit</a>
+                </td>
 
               </tr>
           @endforeach

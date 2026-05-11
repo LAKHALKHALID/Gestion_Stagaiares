@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layout.app')
 @php($cities = [
     "Zagora",
     "Youssoufia",
@@ -136,7 +136,7 @@
                     <!-- Année scolaire -->
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Année Scolaire</label>
-                        <select name="nom_annee_scolaire" class="form-select" >
+                        <select name="nom_annee_scolaire" class="form-control" >
                             @for ($i = date('Y'); $i >= date('Y')-4; $i--)
                                 <option value="{{($i-1).'/'.$i}}">{{($i-1).'/'.$i}}</option>
                             @endfor
@@ -159,7 +159,7 @@
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Lieu de Naissance</label>
                         {{-- <input type="text" name="lieu_naissance" class="form-control"> --}}
-                        <select name="lieu_naissance"  class="form-select" >
+                        <select name="lieu_naissance"  class="form-control" >
                             <option value="">-- Select City --</option>
                             @foreach($cities as $city)
                                 <option value="{{ $city }}" {{ old('lieu_naissance') == $city ?'selected':'' }}>{{ $city }}</option>
@@ -174,7 +174,7 @@
                     <!-- Niveau formation -->
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Niveau Formation</label>
-                        <select name="niveau_formation" class="form-select" >
+                        <select name="niveau_formation" class="form-control" >
                             <option value="Technicien" {{ old('niveau_formation') == 'Technicien' ?'selected':'' }}>Technicien</option>
                             <option value="Technicien spécialisé" {{ old('niveau_formation') == 'Technicien' ?'selected':'' }}>Technicien spécialisé</option>
                             
@@ -196,7 +196,7 @@
                     <!-- Année étude -->
                     <div class="col-md-6 mb-3">
                         <label class="form-label">Année Étude</label>
-                        <select name="annee_etude" class="form-select" >
+                        <select name="annee_etude" class="form-control" >
                             <option value="1ère année" {{ old('annee_etude') == '1ère année' ?'selected':'' }}>1ère année</option>
                             <option value="2ème année" {{ old('annee_etude') == '2ème année' ?'selected':'' }}>2ème année</option>
                             <option value="3ème année"{{ old('annee_etude') == '3ème année' ?'selected':'' }}>3ème année</option>

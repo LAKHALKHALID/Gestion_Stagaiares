@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layout.app')
 
 @section('title','create')
 
@@ -10,6 +10,25 @@
     "13h30-16h00",
     "16h00-18h30"
 ])
+<style>
+.form-checkl-new{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.form-check-inputl-new{
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+
+.form-check-label-new{
+    font-size: 16px;
+    cursor: pointer;
+}
+</style>
 <div class="container mt-4">
 
     <div class="card shadow-sm border-0">
@@ -34,7 +53,7 @@
                             type="text" 
                             readonly
                             disabled
-                            value="{{$ab->stagiaire->cef}}"
+                            value="{{$ab->stagiaire_id}}"
                             name="cef" 
                             class="form-control" 
                             placeholder="Entrer le CEF" 
@@ -51,9 +70,9 @@
                     <div class="row">
                       @for ($i = 0; $i < count($seances); $i++)
                               <div class="col-md-3">
-                                  <div class="form-check">
-                                      <input class="form-check-input" {{in_array($seances[$i],$data)?'checked':''}} type="checkbox" name="seance[]" value="8h30-11h00" id="{{'s'.($i+1)}}">
-                                      <label class="form-check-label" for="{{'s'.($i+1)}}">
+                                  <div class="form-check-new">
+                                      <input class="form-check-input-new" {{in_array($seances[$i],$data)?'checked':''}} type="checkbox" name="seance[]" value="8h30-11h00" id="{{'s'.($i+1)}}">
+                                      <label class="form-check-label-new" for="{{'s'.($i+1)}}">
                                           {{$seances[$i]}}
                                       </label>
                                   </div>

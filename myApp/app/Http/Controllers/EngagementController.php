@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Engagement;
+use App\Models\Stagiaire;
 use Illuminate\Http\Request;
 
 class EngagementController extends Controller
@@ -12,7 +13,8 @@ class EngagementController extends Controller
      */
     public function index()
     {
-        //
+        $engagements = Engagement::all();
+        return view('engagements.index',compact('engagements'));
     }
 
     /**
@@ -20,7 +22,7 @@ class EngagementController extends Controller
      */
     public function create()
     {
-        //
+        return view('engagements.create');
     }
 
     /**
@@ -28,7 +30,13 @@ class EngagementController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $stagiaire = Stagiaire::find($request->stagiaire_id);
+        // return $stagiaire;
+        if($stagiaire){
+            Engagement::create($request->all());
+            return redirect()->route('engagements.index')->with('success','Ajouter avec succée');
+        }
+        return redirect()->route('engagements.create')->with('error', 'c\'est cef né pas exist ');
     }
 
     /**
@@ -42,17 +50,29 @@ class EngagementController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Engagement $engagement)
+    public function edit(string $id)
     {
-        //
+        $engagement = Engagement::findOrFail($id);
+
+        return view('engagements.edit', compact('engagement'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Engagement $engagement)
+    public function update(Request $request, string $id)
     {
-        //
+        $engagement = Engagement::findOrFail($id);
+
+        $engagement->update([
+            'stagiaire_id' => $request->stagiaire_id,
+            'motif' => $request->motif,
+            'date' => $request->date,
+        ]);
+
+        return redirect()
+            ->route('engagements.index')
+            ->with('success', 'Updated Successfully');
     }
 
     /**

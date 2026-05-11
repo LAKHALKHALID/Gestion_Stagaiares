@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layout.app')
 
-@section('title', 'listAbsence')
+{{-- @section('title', 'listAbsence') --}}
 
 @section('content')
 
@@ -121,7 +121,7 @@
                                         name="all_dates[{{$stagiaire->cef}}][]"
                                         value="{{$date}}">
 
-                                            <td><input type="checkbox" value="8h30-11h00"
+                                            <td><input type="checkbox" value="8h30-11h00" 
                                                     name="absences[{{ $stagiaire->cef }}][{{ $date }}][]"
                                                     {{ in_array('8h30-11h00', $seances) ? 'checked' : '' }}></td>
                                             <td><input type="checkbox" value="11h00-13h30"

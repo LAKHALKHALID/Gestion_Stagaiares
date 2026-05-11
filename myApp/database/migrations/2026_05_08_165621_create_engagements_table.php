@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('engagements', function (Blueprint $table) {
             $table->id();
+            $table->string('stagiaire_id',20);
+            $table->foreign('stagiaire_id')->references('cef')->on('stagiaires')->cascadeOnDelete()->cascadeOnUpdate();
             $table->string('motif',10);
             $table->date('date');
             $table->timestamps();

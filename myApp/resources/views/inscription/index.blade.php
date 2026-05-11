@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layout.app')
 
 
-@section('title','inscription')
+{{-- @section('title','inscription') --}}
 
 
 @section('content')

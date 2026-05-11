@@ -1,10 +1,10 @@
-@extends('layouts.app')
+@extends('layout.app')
 
-@section('title', 'index')
+{{-- @section('title', 'index') --}}
 
 
 @section('content')
-    <div class="container">
+    <div class="container my-5">
         <a href="{{ route('absences.create') }}" class="btn btn-primary">Ajouter</a>
         @if (session('success'))
             <div class="alert alert-success alert-dismissible fade show my-3" role="alert">
@@ -31,12 +31,8 @@
                 </div>
             </div>
         </form>
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-            data-bs-target="#\\\\\\">
-  Launch demo modal
-</button>
-        <table class="table table-hover text-center
-            table-striped-columns">
+    
+        <table class="table table-bordered table-head-bg-info table-bordered-bd-info">
             <thead>
                 <tr>
                     <th>#ID</th>
@@ -59,10 +55,10 @@
                             <td>{{ $ab->medecin }}</td>
                             <td>{{ $ab->created_at }}</td>
                             <td>
-                                <a href="{{ route('absences.edit', ['id' => $ab->id]) }}" class="btn btn-success">Edit</a>
-                                <a href="" class="btn btn-danger">Delete</a>
+                                <a href="{{ route('absences.edit', ['id' => $ab->id]) }}" class="btn btn-success btn-sm">Edit</a>
+                                <a href="" class="btn btn-danger  btn-sm">Supp</a>
                                 <button data-absences="{{ $ab }}" data-stagiaire="{{ $ab->stagiaire }}"
-                                    class="btn btn-info print_billet">Billet</button>
+                                    class="btn btn-info print_billet btn-sm">Billet</button>
 
 
                             </td>
@@ -109,24 +105,24 @@
                 let absence = JSON.parse(absencesData);
                 let stagiaire = JSON.parse(stagiaireData);
 
-                let fullName = stagiaire.nom_francais+" "+stagiaire.prenom_francais
+                let fullName = stagiaire.nom_francais + " " + stagiaire.prenom_francais
                 console.log(absence);
                 console.log(absence.created_at)
-                                  let isoDate = "2026-05-05T13:08:53.000000Z";
+                let isoDate = "2026-05-05T13:08:53.000000Z";
 
-                  let date = new Date(isoDate);
+                let date = new Date(isoDate);
 
-                  let formattedDate = 
-                      (date.getMonth() + 1).toString().padStart(2, '0') + '/' +
-                      date.getDate().toString().padStart(2, '0') + '/' +
-                      date.getFullYear();
+                let formattedDate =
+                    (date.getMonth() + 1).toString().padStart(2, '0') + '/' +
+                    date.getDate().toString().padStart(2, '0') + '/' +
+                    date.getFullYear();
 
-                  let formattedTime = 
-                      date.getHours().toString().padStart(2, '0') + ':' +
-                      date.getMinutes().toString().padStart(2, '0');
+                let formattedTime =
+                    date.getHours().toString().padStart(2, '0') + ':' +
+                    date.getMinutes().toString().padStart(2, '0');
 
-                  console.log(formattedDate); // 05/05/2026
-                  console.log(formattedTime); // 13:08
+                console.log(formattedDate); // 05/05/2026
+                console.log(formattedTime); // 13:08
 
                 // Build HTML 
                 let html = `
@@ -145,5 +141,4 @@
             };
         });
     </script>
-
 @endsection

@@ -9,7 +9,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            <ul class="navbar-nav me-auto">
+            {{-- <ul class="navbar-nav me-auto">
                 <li class="nav-item">
                     <a href="{{route('stagiaires.index')}}" class="nav-link">Stagiaires</a>
                 </li>
@@ -33,7 +33,7 @@
                     <a href="{{route('deperditions.index')}}" class="nav-link">Deperdition</a>
                 </li>
                 
-            </ul>
+            </ul> --}}
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('filieres', function (Blueprint $table) {
             $table->string('code_f')->primary(); // PK
             $table->string('niveau',40);
+            $table->string('mode_f',40);
             $table->text('desc')->nullable();
             $table->string('secteur')->nullable();
             $table->string('mode_formation', 30);

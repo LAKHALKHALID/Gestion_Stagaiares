@@ -63,4 +63,8 @@ class Stagiaire extends Model
     {
         return $this->hasMany(Deperdition::class, 'stagiaire_id', 'cef');
     }
+
+    public function engagements():HasMany{
+        return $this->hasMany(Engagement::class,'stagiaire_id','cef');
+    }
 }

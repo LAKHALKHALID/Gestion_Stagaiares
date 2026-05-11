@@ -19,13 +19,13 @@ class AbsenceController extends Controller
         $st = Stagiaire::find($req->cef);
 
         
-        if($st){
+        if($st && $req->cef){
             
             $absences =$st->absences;
             
         }
         else{
-            $absences = [];
+            $absences = Absence::all();
             
         }
 
