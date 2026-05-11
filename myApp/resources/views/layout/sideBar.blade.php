@@ -4,17 +4,24 @@
 				<div class="sidebar-content">
 					<ul class="nav">
 						<li class="nav-item active">
-							<a href="{{route('stagiaires.index')}}">
+							<a href="/">
 								<i class="fas fa-home"></i>
-								<p>Stagiaires</p>
+								<p>Dashboard</p>
 								<span class="badge badge-count">5</span>
 							</a>
 						</li>
+						
 						<li class="nav-section">
 							<span class="sidebar-mini-icon">
 								<i class="fa fa-ellipsis-h"></i>
 							</span>
 							<h4 class="text-section">Components</h4>
+						</li>
+						<li class="nav-item">
+							<a href="{{route('stagiaires.index')}}">
+								<span class="letter-icon">St</span>
+								<p>Stagiaires</p>
+							</a>
 						</li>
 						<li class="nav-item">
 							<a href="{{route('retraitBac.index')}}">
