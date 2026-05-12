@@ -9,37 +9,39 @@ use Illuminate\Http\Request;
 
 class StagiaireController extends Controller
 {
+
     
+
     public function index(Request $req)
     {
-        $g = Groupe::all();
-        $f = Filiere::all();
+        $query = Stagiaire::query();
 
-        // dd($req->code_f);
-        // if($req){
-        //     return $req;
-        // }
+        if ($req->cef) {
+            $query->where('cef', $req->cef);
 
-        if($req->cef !== null ){
-                $stagiaires =  Stagiaire::where('cef',$req->cef)->get();
+        
+            if (!Stagiaire::where('cef', $req->cef)->exists()) {
+                return redirect()
+                    ->route('stagiaires.index')
+                    ->with('error', 'CEF of the stagiaire is not correct !');
+            }
         }
-        elseif($req->cef == null && $req->code_g != null && $req->code_g != null){
-            $code_f = $req->code_f;
+        
+        elseif ($req->code_g) {
             $code_g = $req->code_g;
-            $stagiaires = Stagiaire::whereHas('filieres', function ($query) use ($code_f) {
-                $query->where('code_f', $code_f);
-            })->whereHas('groupes', function ($query) use ($code_g) {
-                $query->where('code_g', $code_g);
-            })
-                ->get();
+
+            $query->whereHas('groupes', function ($q) use ($code_g) {
+                $q->where('code_g', $code_g);
+            });
         }
-        else{
-            $stagiaires = Stagiaire::all();
-        }
+
+        
+        $stagiaires = $query->simplePaginate(10);
 
         $g = Groupe::all();
         $f = Filiere::all();
-        return view('stagiaires.index',compact('stagiaires','g','f'));
+
+        return view('stagiaires.index', compact('stagiaires', 'g', 'f'));
     }
 
     /**
@@ -64,6 +66,7 @@ class StagiaireController extends Controller
         }
         return view('stagiaires.badge',compact('stagiaires'));
     }
+    
 
     /**
      * Store a newly created resource in storage.

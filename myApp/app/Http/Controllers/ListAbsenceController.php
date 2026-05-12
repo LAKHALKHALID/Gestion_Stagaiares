@@ -40,92 +40,160 @@ class ListAbsenceController extends Controller
         //
     }
 
-    // public function modifie(){
-    //     $absences = Absence::where('startWeek','!=',null)->get();
-    //     // dd($absences);
-    //     return view('listAbsences.edit',compact('absences'));
-    // }
 
-    // public function newIndex(Request $req){
-    //     $groupe = Groupe::where('nom_g', $req->groupe)->get();
-    //     $startOfWeek =  Carbon::parse($req->date)->startOfWeek();        
-    //     $st = '';
-    //     if ($req->groupe) $st = $groupe[0]->stagiaires;
-
-    //     return view('listAbsences.edit', compact('st', 'startOfWeek'));
-    // }
 
     /**
      * Store a newly created resource in storage.
      */
+
+
+    // public function store(Request $req)
+    // {
+    //     $absences = $req->absences ?? [];
+    //     $groupe = Groupe::where('nom_g', $req->group_name)->first();
+
+    //     $groupe->stagiaires->each(function ($stagiaire) use ($absences) {
+
+    //         if (!array_key_exists($stagiaire->cef, $absences)) {
+    //             Absence::where('stagiaire_id', $stagiaire->cef)
+    //                 ->where('startWeek', '!=', null)->delete();
+    //         }
+
+    //     });
+
+    //     foreach ($absences as $stagiaireId => $absenceDates) {
+    //         foreach ($absenceDates as $date => $seances) {
+    //             $absence =  Absence::updateOrCreate(
+    //                 [
+    //                     'stagiaire_id' => $stagiaireId,
+    //                     'date' => \Carbon\Carbon::parse($date)->format('Y-m-d'),
+    //                 ],
+    //                 [
+    //                     'status' => 'Absence',
+    //                     'seance' => implode(' ;', $seances),
+    //                     'startWeek' => \Carbon\Carbon::parse($req->start_date)->format('Y-m-d'),
+    //                 ]
+    //             );
+
+
+    //         }
+    //     }
+    //     $groupe_name = $req?->group_name ?? "";
+    //     $date = $req?->start_date ?? "";
+    //     return redirect()->route('listAbsences.index', ["groupe" => $groupe_name, "date" => $date])->with('success', 'Absences mises à jour avec succès !');
+    // }
+
+    
+
     public function store(Request $req)
     {
         $absences = $req->absences ?? [];
         $groupe = Groupe::where('nom_g', $req->group_name)->first();
-    
+
+        $dateWeek = Carbon::parse($req->start_date)->format('Y-m-d');
+
+        /*
+    |--------------------------------------------------------------------------
+    | 1️⃣ DELETE absences not submitted anymore
+    |--------------------------------------------------------------------------
+    */
         $groupe->stagiaires->each(function ($stagiaire) use ($absences) {
 
             if (!array_key_exists($stagiaire->cef, $absences)) {
-                Absence::where('stagiaire_id', $stagiaire->cef)
-                    ->where('startWeek', '!=', null)->delete();
-            }
 
+                $oldAbsences = Absence::where('stagiaire_id', $stagiaire->cef)->get();
+
+                foreach ($oldAbsences as $old) {
+
+                    // 🔁 reverse transaction
+                    $seanceCount = $old->seance ? count(explode(' ;', $old->seance)) : 0;
+
+                    Transaction::create([
+                        'stagiaire_id' => $stagiaire->cef,
+                        'motif' => 'a', // reverse
+                        'note' => - ($seanceCount * 0.5),
+                    ]);
+
+                    $old->delete();
+                }
+            }
         });
 
+        /*
+    |--------------------------------------------------------------------------
+    | 2️⃣ CREATE / UPDATE absences
+    |--------------------------------------------------------------------------
+    */
         foreach ($absences as $stagiaireId => $absenceDates) {
+
             foreach ($absenceDates as $date => $seances) {
-                $absence =  Absence::updateOrCreate(
-                    [
+
+                $dateFormatted = Carbon::parse($date)->format('Y-m-d');
+
+                $existing = Absence::where('stagiaire_id', $stagiaireId)
+                    ->where('date', $dateFormatted)
+                    ->first();
+
+                $note = count($seances) * 0.5;
+
+                $data = [
+                    'status' => 'Absence',
+                    'seance' => implode(' ;', $seances),
+                    'startWeek' => $dateWeek,
+                ];
+
+                if ($existing) {
+
+                    /*
+                |-------------------------
+                | 🔁 UPDATE
+                |-------------------------
+                */
+
+                    // reverse old transaction first
+                    $oldCount = $existing->seance ? count(explode(' ;', $existing->seance)) : 0;
+
+                    Transaction::create([
                         'stagiaire_id' => $stagiaireId,
-                        'date' => \Carbon\Carbon::parse($date)->format('Y-m-d'),
-                    ],
-                    [
-                        'status' => 'Absence',
-                        'seance' => implode(' ;', $seances),
-                        'startWeek' => \Carbon\Carbon::parse($req->start_date)->format('Y-m-d'),
-                    ]
-                );
-                // $absence = Absence::where('stagiaire_id', $stagiaireId)
-                //     ->where('date', \Carbon\Carbon::parse($date)->format('Y-m-d'))
-                //     ->first();
+                        'motif' => 'a',
+                        'note' => - ($oldCount * 0.5),
+                    ]);
 
-                // $data = [
-                //     'status' => 'Absence',
-                //     'seance' => implode(' ;', $seances),
-                //     'startWeek' => \Carbon\Carbon::parse($req->start_date)->format('Y-m-d'),
-                // ];
+                    // update absence
+                    $existing->update($data);
 
-                // if ($absence) {
+                    // add new transaction
+                    Transaction::create([
+                        'stagiaire_id' => $stagiaireId,
+                        'motif' => 'a',
+                        'note' => $note,
+                    ]);
+                } else {
 
-                //     // UPDATE
-                //     // $oldSeances = explode(';', $absence->seance);
-                //     // $transaction = Transaction::where('stagiaire_id', $stagiaireId)
-                //     //     ->where('motif', 'A')
-                //     //     ->latest()
-                //     //     ->first();
-                //     // $transaction->update([
-                //     //     'note' => $transaction->note - count($oldSeances) * 0.5,
-                //     // ]);
-                //     $absence->update($data);
-                // } else {
+                    /*
+                |-------------------------
+                | ➕ CREATE
+                |-------------------------
+                */
 
-                //     // CREATE
-                //     $data['stagiaire_id'] = $stagiaireId;
-                //     $data['date'] = \Carbon\Carbon::parse($date)->format('Y-m-d');
+                    Absence::create(array_merge([
+                        'stagiaire_id' => $stagiaireId,
+                        'date' => $dateFormatted,
+                    ], $data));
 
-                //     // Absence::create($data);
-                //     // $transaction = new Transaction();
-                //     // $transaction->stagiaire_id = $stagiaireId;
-                //     // $transaction->note = 0 - count($seances) * 0.5;
-                //     // $transaction->motif = 'A';
-                //     // $transaction->save();
-                // }
-                
+                    Transaction::create([
+                        'stagiaire_id' => $stagiaireId,
+                        'motif' => 'a',
+                        'note' => $note,
+                    ]);
+                }
             }
         }
-        $groupe_name = $req?->group_name ?? "";
-        $date = $req?->start_date ?? "";
-        return redirect()->route('listAbsences.index', ["groupe" => $groupe_name, "date" => $date])->with('success', 'Absences mises à jour avec succès !');
+
+        return redirect()->route('listAbsences.index', [
+            "groupe" => $req->group_name ?? "",
+            "date" => $req->start_date ?? ""
+        ])->with('success', 'Absences mises à jour avec succès !');
     }
 
     /**

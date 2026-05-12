@@ -32,10 +32,18 @@
             </div>
 
             <!-- Right Info -->
-            <div class="col-md-6 text-md-end mt-3 mt-md-0">
+            <div class="col-md-4 text-md-start mt-3 mt-md-0">
                 <p><strong>CEF:</strong> {{ $stagiaire->cef }}</p>
                 <p><strong>CIN:</strong> {{ $stagiaire->cin }}</p>
                 <p><strong>Année:</strong> {{ $stagiaire->nom_annee_scolaire }}</p>
+            </div>
+
+            <div class="col-md-2 text-md-end mt-3 mt-md-0">
+                <a href="{{route('stagiaires.edit',['cef'=>$stagiaire->cef])}}" class="btn w-100  btn-success ">edit</a>
+                <a href="{{route('stagiaires.edit',['cef'=>$stagiaire->cef])}}" class="btn w-100  btn-danger my-2">Delete</a>
+
+
+                
             </div>
         </div>
     </div>
@@ -93,53 +101,66 @@
                 <p><strong>Début formation:</strong> {{ $stagiaire->date_demarrage_formation }}</p>
             </div> --}}
             <div class="card shadow-sm">
-    <div class="card-header">
-        <h5 class="text-primary fw-bold my-2">Informations académiques</h5>
-    </div>
+                <div class="card-header">
+                    <h5 class="text-primary fw-bold my-2">Informations académiques</h5>
+                </div>
 
-    <div class="card-body">
-        <p class="d-flex justify-content-between">
-            <span class="fw-bold">Niveau</span>
-            <span class="me-5 fw-bolder">{{ $stagiaire->niveau_formation }}</span>
-        </p>
+                <div class="card-body">
+                    <p class="d-flex justify-content-between">
+                        <span class="fw-bold">Année Scolaire</span>
+                        <span class="me-5 fw-bolder">{{ $stagiaire->nom_annee_scolaire }}</span>
+                    </p>
+                    <p class="d-flex justify-content-between">
+                        <span class="fw-bold">Niveau</span>
+                        <span class="me-5 fw-bolder">{{ $stagiaire->niveau_formation }}</span>
+                    </p>
+                    <p class="d-flex justify-content-between">
+                        <span class="fw-bold">Type</span>
+                        <span class="me-5 fw-bolder">{{ $stagiaire->type_formation }}</span>
+                    </p>
+                    @php
+                        $tatal = 0;
+                        foreach ($stagiaire->transactions as $transaction) {
+                            $tatal += $transaction->note;
+                            
+                        }
+                    @endphp
+                    <p class="d-flex justify-content-between">
+                        <span class="fw-bold">Note absences / 10 </span>
+                        <span class="me-5 fw-bolder">{{ 10 - $tatal }}</span>
+                    </p>
+                    <p class="d-flex justify-content-between">
+                        <span class="fw-bold">Année étude</span>
+                        <span class="me-5 fw-bolder">{{ $stagiaire->annee_etude }}</span>
+                    </p>
 
-        <p class="d-flex justify-content-between">
-            <span class="fw-bold">Type</span>
-            <span class="me-5 fw-bolder">{{ $stagiaire->type_formation }}</span>
-        </p>
-
-        <p class="d-flex justify-content-between">
-            <span class="fw-bold">Année étude</span>
-            <span class="me-5 fw-bolder">{{ $stagiaire->annee_etude }}</span>
-        </p>
-
-        <p class="d-flex justify-content-between">
-            <span class="fw-bold">Début formation</span>
-            <span class="me-5 fw-bolder">{{ $stagiaire->date_demarrage_formation }}</span>
-        </p>
-    </div>
-</div>
+                    <p class="d-flex justify-content-between">
+                        <span class="fw-bold">Début formation</span>
+                        <span class="me-5 fw-bolder">{{ $stagiaire->date_demarrage_formation }}</span>
+                    </p>
+                </div>
+            </div>
         </div>
 
         <!-- Contact -->
         <div class="col-md-6">
             <div class="card p-3 shadow-sm">
-                <h5>Contact</h5>
+                <h5>Filiers</h5>
                 <hr>
-
-                <p><strong>Téléphone:</strong> {{ $stagiaire->tel }}</p>
+                @foreach ($stagiaire->filieres as $item)
+                        <p><strong>{{ $item->nom_filiere_francais }}</strong> </p>
+                @endforeach
             </div>
         </div>
 
         <!-- Extra -->
-        <div class="col-md-6">
+       <div class="col-md-6">
             <div class="card p-3 shadow-sm">
-                <h5>Informations supplémentaires</h5>
+                <h5>Groupes</h5>
                 <hr>
-
-                <p><strong>Note:</strong> {{ $stagiaire->note }} / 20</p>
-                <p><strong>Créé:</strong> {{ $stagiaire->created_at }}</p>
-                <p><strong>Mis à jour:</strong> {{ $stagiaire->updated_at }}</p>
+                @foreach ($stagiaire->groupes as $item)
+                        <p><strong>{{ $item->nom_g }}</strong> </p>
+                @endforeach
             </div>
         </div>
 

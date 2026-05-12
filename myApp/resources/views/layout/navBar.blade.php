@@ -17,8 +17,15 @@
 			</div>
 			<nav class="navbar navbar-header navbar-expand-lg">
 				<div class="container-fluid">
-					
-					 <ul class="navbar-nav ms-auto">
+					<div class="navbar-nav ms-2">
+						<div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+							<form action="{{route('document.index')}}" method="get" class="d-flex mb-0" role="search">
+								<input class="form-control me-2" name="group_or_cef" type="search" placeholder="Search" aria-label="Search"/>
+								<button class="btn btn-outline-light" type="submit">Search</button>
+							</form>
+						</div>
+					</div>
+				    <ul class="navbar-nav ms-auto">
                 <!-- Authentication Links -->
                 <li class="nav-item dropdown">
                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

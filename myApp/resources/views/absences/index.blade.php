@@ -54,9 +54,14 @@
                             <td>{{ $ab->chemin }}</td>
                             <td>{{ $ab->medecin }}</td>
                             <td>{{ $ab->created_at }}</td>
-                            <td>
+                            <td class="d-flex gap-1">
                                 <a href="{{ route('absences.edit', ['id' => $ab->id]) }}" class="btn btn-success btn-sm">Edit</a>
-                                <a href="" class="btn btn-danger  btn-sm">Supp</a>
+                                <form action="{{route('absences.destroy',$ab->id)}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                <button onclick="return confirm('Are you sure you want to delete this absence?')" class="btn btn-danger  btn-sm">Supp</button>
+
+                                </form>
                                 <button data-absences="{{ $ab }}" data-stagiaire="{{ $ab->stagiaire }}"
                                     class="btn btn-info print_billet btn-sm">Billet</button>
 
@@ -69,6 +74,9 @@
 
             </tbody>
             </table>
+            <div class="mt-3">
+                {{ $absences->links() }}
+            </div>
     </div>
 
 

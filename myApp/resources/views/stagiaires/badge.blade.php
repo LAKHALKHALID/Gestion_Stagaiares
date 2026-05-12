@@ -36,9 +36,9 @@
 
         @foreach($stagiaires as $stagiaire)
 
-            <div class="col-md-6 mb-4">
+            <div class="col-md-6 mb-1">
 
-                <div class="card shadow-sm border-0">
+                <div class="card shadow-sm border-0 bg-white">
 
                     <div class="card-body">
 
@@ -48,7 +48,7 @@
                             <div class="col-6">
 
                                 <p class="mb-1">
-                                    <strong>Nom:</strong>
+                                    <strong>Nom  :</strong>
                                     {{ $stagiaire->nom_francais }}
                                 </p>
 
@@ -58,22 +58,37 @@
                                 </p>
 
                                 <p class="mb-1">
-                                    <strong>CIN:</strong>
+                                    <strong>CIN  :</strong>
                                     {{ $stagiaire->cin }}
                                 </p>
 
                                 <p class="mb-0">
-                                    <strong>CEF:</strong>
+                                    <strong>CEF     :</strong>
                                     {{ $stagiaire->cef }}
                                 </p>
+                                <p class="mb-0">
+                                    <strong>Filière   :</strong>
+                                    {{ $stagiaire->filieres[0]->nom_filiere_francais }}
+                                </p>
+                                <p class="mb-0">
+                                    <strong>Goupes   :</strong>
+                                    {{ $stagiaire->groupes[0]->nom_g }}
+                                </p>
+
 
                             </div>
 
                             <!-- BARCODE -->
                             <div class="col-6 text-center">
+                                <p class="mb-4">
+                                    <strong>CEF AL ADARISSA FES   </strong>
+                                </p>
+                                <p class="mb-2">
+                                    <strong>{{ $stagiaire->nom_annee_scolaire }}</strong>
+                                </p>
 
                                 <svg class="barcode w-100"
-                                     data-cef="{{ $stagiaire->cef }}">
+                                      data-cef="{{ $stagiaire->cef }}">
                                 </svg>
 
                             </div>
@@ -94,7 +109,7 @@
 {{-- @foreach($stagiaires as $stagiaire)
 
     <svg class="barcode"
-         data-cef="{{ $stagiaire->cef }}">
+          data-cef="{{ $stagiaire->cef }}">
     </svg>
 
 @endforeach --}}

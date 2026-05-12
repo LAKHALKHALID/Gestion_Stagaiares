@@ -4,7 +4,7 @@
 				<div class="sidebar-content">
 					<ul class="nav">
 						<li class="nav-item active">
-							<a href="/dashboard">
+							<a href="{{route('document.dashboard')}}">
 								<i class="fas fa-home"></i>
 								<p>Dashboard</p>
 								<span class="badge badge-count">5</span>
@@ -81,6 +81,12 @@
 							<a href="{{route('engagements.index')}}">
 								<span class="letter-icon">En</span>
 								<p>Engagements</p>
+							</a>
+						</li>
+						<li class="nav-item">
+							<a href="{{route('document.index')}}">
+								<span class="letter-icon">At</span>
+								<p>Attestation</p>
 							</a>
 						</li>
 						

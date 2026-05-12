@@ -10,6 +10,12 @@
                   <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
               </div>
             @endif
+             @if (session('error'))
+              <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                  {{ session('error') }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+              </div>
+            @endif
       <a href="{{route('stagiaires.create')}}" class="btn btn-primary">Ajouter New Stagiaire</a>
       <div class="container my-5">
         <form action="{{route('stagiaires.index')}}" method="GET" class="mb-3">
@@ -22,16 +28,7 @@
                 </div>
 
                 <!-- Filiere -->
-                <div class="col-md-3">
-                    <label class="form-label">Filière</label>
-                    {{-- <input type="text" name="code_f" class="form-control" placeholder="Enter Filière"> --}}
-                    <select class="form-control" name="code_f">
-                      <option value="" selected>All</option>
-                      @foreach ($f as $item)
-                          <option value="{{$item->code_f}}">{{$item->nom_filiere_francais}}</option>
-                      @endforeach
-                    </select>
-                </div>
+                
 
                 <div class="col-md-4">
                     <label class="form-label">Groupe</label>
@@ -94,6 +91,9 @@
           @endforeach
         </tbody>
       </table>
+      <div class="mt-3">
+          {{ $stagiaires->links() }}
+      </div>
     </div>
 
 @endsection

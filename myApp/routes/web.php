@@ -4,6 +4,7 @@ use App\Http\Controllers\AbsenceController;
 use App\Http\Controllers\BacController;
 use App\Http\Controllers\ComportementController;
 use App\Http\Controllers\DeperditionController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\EngagementController;
 use App\Http\Controllers\InscriptionController;
 use App\Http\Controllers\ListAbsenceController;
@@ -76,6 +77,7 @@ Route::middleware(['auth'])->controller(AbsenceController::class)->group(functio
     Route::post('/absences', 'store')->name('absences.store');
     Route::get('/absences/{id}/edit', 'edit')->name('absences.edit');
     Route::put('/absences/{id}', 'update')->name('absences.update');
+    Route::delete('/absences/{id}', 'destroy')->name('absences.destroy');
 });
 
 Route::middleware(['auth'])->controller(ComportementController::class)->group(function(){
@@ -121,6 +123,11 @@ Route::middleware(['auth'])->controller(EngagementController::class)->group(func
     Route::get('/engagements/{id}/edit', 'edit')->name('engagements.edit');
     Route::put('/engagements/{id}', 'update')->name('engagements.update');
     Route::delete('/engagements/{id}', 'destroy')->name('engagements.destroy');
+});
+
+Route::controller(DocumentController::class)->group(function(){
+    Route::get('/document','index')->name('document.index');
+    Route::get('/dashboard', 'dashboard')->name('document.dashboard');
 });
 
 require __DIR__.'/auth.php';
