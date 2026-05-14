@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Engagement;
 use App\Models\Stagiaire;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 
 class EngagementController extends Controller
 {
@@ -78,8 +79,11 @@ class EngagementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Engagement $engagement)
+    public function destroy(string $id)
     {
-        //
+        $engagement = Engagement::find($id);
+        $engagement->delete();
+        Session::flash('success','Delelte engagement avec succée');
+        return to_route('engagements.index');
     }
 }

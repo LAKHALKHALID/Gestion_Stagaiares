@@ -18,10 +18,13 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-
 Route::get('/dashboard', function () {
     return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->name('dashboard');
+
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -125,9 +128,19 @@ Route::middleware(['auth'])->controller(EngagementController::class)->group(func
     Route::delete('/engagements/{id}', 'destroy')->name('engagements.destroy');
 });
 
-Route::controller(DocumentController::class)->group(function(){
+Route::middleware(['auth'])->controller(DocumentController::class)->group(function(){
     Route::get('/document','index')->name('document.index');
     Route::get('/dashboard', 'dashboard')->name('document.dashboard');
 });
+Route::get('/import-stagiaires', [StagiaireController::class, 'toImport'])
+    ->middleware(['auth'])->name('toImport.stagiaires');
+Route::post('/import-stagiaires', [StagiaireController::class, 'import'])
+    ->middleware(['auth'])->name('import.stagiaires');
+
+
+Route::get('/import-filieres', [FiliersController::class, 'toImport'])
+    ->middleware(['auth'])->name('toImport.filieres');
+Route::get('/import-filieres', [StagiaireController::class, 'import'])
+    ->middleware(['auth'])->name('import.filieres');
 
 require __DIR__.'/auth.php';

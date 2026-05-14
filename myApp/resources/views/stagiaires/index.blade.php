@@ -17,6 +17,8 @@
               </div>
             @endif
       <a href="{{route('stagiaires.create')}}" class="btn btn-primary">Ajouter New Stagiaire</a>
+      <a href="{{route('import.stagiaires')}}" class="btn btn-primary ms-3">Import</a>
+
       <div class="container my-5">
         <form action="{{route('stagiaires.index')}}" method="GET" class="mb-3">
             <div class="row g-3 align-items-end">

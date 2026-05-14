@@ -90,6 +90,13 @@
 							</a>
 						</li>
 						
+						<li class="nav-item">
+							<a href="{{route('import.stagiaires')}}">
+								<span class="letter-icon">Im</span>
+								<p>Import Data</p>
+							</a>
+						</li>
+						
 					</ul>
 				</div>
 			</div>

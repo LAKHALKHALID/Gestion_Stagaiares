@@ -19,6 +19,10 @@
             <a href="{{ route('filiers.create') }}" class="btn btn-primary btn-sm my-3">
                     Ajouter
             </a>
+
+            <a href="{{ route('toImport.filieres') }}" class="btn btn-primary btn-sm my-3">
+                    import
+            </a>
         
 
         
@@ -27,24 +31,7 @@
 
                 <div class="row">
 
-                    {{-- <div class="col-md-4">
-                        <select name="niveau" class="form-control" onchange="this.form.submit()">
-
-                            <option value="">-- Tous les niveaux --</option>
-
-                            <option value="Technicien"
-                                {{ request('niveau') == 'Technicien' ? 'selected' : '' }}>
-                                Technicien
-                            </option>
-
-                            <option value="Technicien Spécialisé"
-                                {{ request('niveau') == 'Technicien Spécialisé' ? 'selected' : '' }}>
-                                Technicien Spécialisé
-                            </option>
-
-                        </select>
-                        Nb: <span class="badge bg-primary">{{ $nb }}</span>
-                    </div> --}}
+                    
 
                     <div class="col-md-4">
                         <select name="mode_f" class="form-control" onchange="this.form.submit()">

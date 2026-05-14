@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 class DocumentController extends Controller
 {
-   
+    
     public function index(Request $req)
     {
         $value = $req->group_or_cef;
@@ -53,13 +53,22 @@ class DocumentController extends Controller
         $retraitbac = Bac::where('is_returned',false)->get();
         $deperdition = Deperdition::all();
         $comportement = Comportement::all();
+        
+
         $stagiaires_no_active = Transaction::with('stagiaire')
             ->select('stagiaire_id')
-            ->selectRaw('SUM(note) as total_absence')
+            ->selectRaw('SUM(note) as total_note')
             ->where('motif', 'a')
             ->groupBy('stagiaire_id')
-            ->havingRaw('SUM(note) >= 5')
-            ->get();
+            ->havingRaw('SUM(note) >= 2')
+            ->paginate(5);
+
+
+
+        $retraitbac = Bac::with('stagiaire')
+            ->where('is_returned', 0)
+            ->where('type_retrait', 'Retrait Provisoire')
+            ->paginate(5);
         return view('dashboard',compact('groupes', 'stagiaires_no_active', 'filieres', 'stagiaires', 'absences', 'engagements', 'retraitbac', 'deperdition', 'comportement'));
     }
 }

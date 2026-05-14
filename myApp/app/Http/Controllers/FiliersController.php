@@ -98,4 +98,47 @@ class FiliersController extends Controller
         $db->delete();
         return to_route('filiers.index');
     }
+
+    public function toImport(){
+        return view('filiers.import');
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+
+        if (!$file) {
+            return back()->with('error', 'No file uploaded');
+        }
+
+        $handle = fopen($file->getRealPath(), 'r');
+
+        $header = true;
+
+
+
+
+        while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+
+            // skip header row
+            if ($header) {
+                $header = false;
+                continue;
+            }
+
+            Filiere::create([
+                'code_f'=> $row[0] ?? null,
+                'nom_filiere_francais' => $row[1] ?? null,
+                'nom_filiere_arabe' => $row[2] ?? null,
+                'mode_formation'=> $row[3] ?? null,
+                'description'=> $row[4] ?? null,
+                'secteur'=> $row[5] ?? null,
+                
+            ]);
+        }
+
+        fclose($handle);
+
+        return back()->with('success', 'Data imported successfully!');
+    }
 }

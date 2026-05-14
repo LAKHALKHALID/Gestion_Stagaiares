@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Filiere;
 use App\Models\Groupe;
 use App\Models\Stagiaire;
@@ -14,6 +15,7 @@ class StagiaireController extends Controller
 
     public function index(Request $req)
     {
+        
         $query = Stagiaire::query();
 
         if ($req->cef) {
@@ -106,6 +108,7 @@ class StagiaireController extends Controller
     public function edit(string $id)
     {
         $stagiaire = Stagiaire::find($id);
+        
         return view('stagiaires.edit',compact('stagiaire'));
     }
 
@@ -144,5 +147,58 @@ class StagiaireController extends Controller
         return redirect()->route('stagiaires.index')->with('success','Supprimer le Stagiaire avec succée !');
 
         
+    }
+    
+    public function toImport(){
+        return view('stagiaires.toImport');
+    }
+
+    
+
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+
+        if (!$file) {
+            return back()->with('error', 'No file uploaded');
+        }
+
+        $handle = fopen($file->getRealPath(), 'r');
+        
+        $header = true;
+        
+
+        
+
+        while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+
+            // skip header row
+            if ($header) {
+                $header = false;
+                continue;
+            }
+
+            Stagiaire::create([
+                'cef' => $row[0] ?? null,
+                'cin' => $row[1] ?? null,
+                'nom_francais' => $row[2] ?? null,
+                'prenom_francais' => $row[3] ?? null,
+                'nom_arabe' => $row[4] ?? null,
+                'prenom_arabe' => $row[5] ?? null,
+                'date_naissance' => Carbon::createFromFormat('m/d/Y', $row[6])->format('Y-m-d') ?? null,
+                'lieu_naissance' => $row[7] ?? null,
+                'niveau_formation' => $row[8] ?? null,
+                'type_formation' => $row[9] ?? null,
+                'annee_etude' => $row[10] ?? null,
+                'date_demarrage_formation' => Carbon::parse($row[11])->format('Y-m-d') ?? null,
+                'tel' => $row[12] ?? null,
+                'nom_annee_scolaire' => $row[13] ?? null,
+                
+            ]);
+        }
+
+        fclose($handle);
+
+        return back()->with('success', 'Data imported successfully!');
     }
 }
