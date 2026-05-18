@@ -1,3 +1,28 @@
+/* Initial state: Transparent background */
+.navbar-transparent {
+    background-color: transparent !important;
+    box-shadow: none;
+}
+
+/* Scrolled state: White background with clean shadow */
+.navbar-scrolled {
+  z-index: 1030; /* Ensure it stays above other content */
+    background-color: #ffffff !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-bottom: 1px solid #f1f3f5;
+}
+
+/* Smooth transition for background color and padding adjustments */
+.transition-all {
+    transition: background-color 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Ensure the hero/home section sits behind the transparent navbar */
+#home {
+    padding-top: 100px; /* Adjust this so your hero text doesn't hide under the menu */
+}
+
+
 /* How It Works Styles */
 .step-card {
     background-color: #ffffff;
@@ -32,6 +57,10 @@
     top: -5px;
     border: 2px solid #ffffff;
 }
+
+
+
+
 
 /* Creating a connecting line between steps on Desktop screens */
 @media (min-width: 768px) {
