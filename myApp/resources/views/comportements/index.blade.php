@@ -24,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($comp as $c)
+          {{-- @foreach ($comp as $c)
             @php($fullName =$c->stagiaire->nom_francais.' '.$c->stagiaire->prenom_francais )
               <tr>
                 <td>{{strtoupper($fullName)}}</td>
@@ -38,7 +38,25 @@
                 </td>
 
               </tr>
-          @endforeach
+          @endforeach --}}
+
+          @foreach ($comp as $c)
+              
+                
+                  @php($fullName = $c->stagiaire ? $c->stagiaire->nom_francais . ' ' . $c->stagiaire->prenom_francais : 'Stagiaire Inconnu')
+              
+              <tr>
+                <td>{{ strtoupper($fullName) }}</td>
+                <td>{{ $c->stagiaire?->cef ?? 'N/A' }}</td> 
+                <td>{{ $c->sanction }}</td>
+                <td>{{ $c->autorite_dec }}</td>
+                <td>{{ $c->miseEnGarde }}</td>
+                <td>{{ $c->created_at }}</td>
+                <td>
+                  <a href="{{ route('comportements.edit', ['id' => $c->id]) }}" class="btn btn-success btn-sm">Edit</a>
+                </td>
+              </tr>
+            @endforeach
         </tbody>
       </table>
     </div>

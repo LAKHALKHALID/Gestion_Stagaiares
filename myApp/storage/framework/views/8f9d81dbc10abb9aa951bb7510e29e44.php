@@ -3,7 +3,7 @@
  
     <section class="hero-section d-flex align-items-center pb-4 pt-1" id="home">
         <div class="container">
-            <div class="row align-items-center g-5">
+            <div class="row align-items-center py-4 g-5">
                 
                 <!-- Left Column: Title, Description & Buttons -->
                 <div class="col-lg-6 text-center text-lg-start">
@@ -17,7 +17,7 @@
                         <a href="#" class="btn btn-primary btn-lg px-4 mb-3 mb-sm-0">
                             <i class="fa-solid fa-right-to-bracket me-2"></i>Se Connecter
                         </a>
-                        <a href="#" class="btn btn-outline-secondary btn-lg px-4">
+                        <a href="#" class="btn btn-outline-primary btn-lg px-4">
                             <i class="fa-solid fa-user-plus me-2"></i>Créer un compte
                         </a>
                     </div>

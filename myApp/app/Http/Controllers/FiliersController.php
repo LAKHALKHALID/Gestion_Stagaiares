@@ -133,7 +133,6 @@ class FiliersController extends Controller
                 'mode_formation'=> $row[3] ?? null,
                 'description'=> $row[4] ?? null,
                 'secteur'=> $row[5] ?? null,
-                
             ]);
         }
 

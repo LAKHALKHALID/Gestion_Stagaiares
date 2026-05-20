@@ -48,35 +48,58 @@ class InscriptionController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    
+   
+
+    public function toImport()
     {
-        //
+        return view('inscription.import');
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+    
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
+    public function import(Request $request)
     {
-        //
-    }
+        $file = $request->file('file');
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        if (!$file) {
+            return back()->with('error', 'No file uploaded');
+        }
+
+        $handle = fopen($file->getRealPath(), 'r');
+        $header = true;
+
+        while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+            // Skip header row
+            if ($header) {
+                $header = false;
+                continue;
+            }
+
+            $cef           = $row[0] ?? null;
+            $groupeCode    = $row[1] ?? null; 
+            $filiereCode   = $row[2] ?? null; 
+
+            if (!$cef) {
+                continue; // Skip if no CEF identifier
+            }
+
+            // 2. Find or Create the Stagiaire so we don't duplicate records
+            $stagiaire = Stagiaire::find($cef);
+
+            $groupe = Groupe::where('code_g', $groupeCode)->first();
+            if ($groupe && $stagiaire) {
+                $stagiaire->groupes()->syncWithoutDetaching([$groupeCode]);
+            }
+
+            $filiere = Filiere::where('code_f', $filiereCode)->first(); 
+            if ($filiere && $stagiaire) {
+                $stagiaire->filieres()->syncWithoutDetaching([$filiereCode]);
+            }
+        }
+
+        fclose($handle);
+
+        return back()->with('success', 'Stagiaires and relationships imported successfully!');
     }
 }

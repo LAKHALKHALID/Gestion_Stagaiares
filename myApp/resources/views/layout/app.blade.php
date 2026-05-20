@@ -3,10 +3,10 @@
 
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <title>Azzara Bootstrap Dashboard</title>
+    <title>OFPPT</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no'
         name='viewport' />
-    <link rel="icon" href="{{asset('assets/img/icon.ico')}}" type="image/x-icon" />
+    <link rel="icon" href="{{asset('assets/img/OFPPT.png')}}" type="image/x-icon" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     <script src="{{asset('assets/js/plugin/webfont/webfont.min.js')}}"></script>
@@ -38,8 +38,11 @@
 
 
     <div class="wrapper">
-        @include('layout.navBar')
-        @include('layout.sideBar')
+        @if (!isset($noNav))
+            @include('layout.navBar')
+            @include('layout.sideBar')
+        @endif
+        
 
         <div class="main-panel">
             <div class="content content-documentation">

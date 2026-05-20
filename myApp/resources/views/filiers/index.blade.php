@@ -20,9 +20,9 @@
                     Ajouter
             </a>
 
-            <a href="{{ route('toImport.filieres') }}" class="btn btn-primary btn-sm my-3">
+            {{-- <a href="{{ route('toImport.filieres') }}" class="btn btn-primary btn-sm my-3">
                     import
-            </a>
+            </a> --}}
         
 
         

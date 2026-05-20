@@ -9,31 +9,7 @@
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <!-- Left Side Of Navbar -->
-            {{-- <ul class="navbar-nav me-auto">
-                <li class="nav-item">
-                    <a href="{{route('stagiaires.index')}}" class="nav-link">Stagiaires</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('inscription.index')}}" class="nav-link">Inscription</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('absences.index')}}" class="nav-link">Absences</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('comportement.index')}}" class="nav-link">Comportement</a>
-                </li>
-                
-                <li class="nav-item">
-                    <a href="{{route('listAbsences.index')}}" class="nav-link">ListAbsences</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('retraitBac.index')}}" class="nav-link">Retrait Bac</a>
-                </li>
-                <li class="nav-item">
-                    <a href="{{route('deperditions.index')}}" class="nav-link">Deperdition</a>
-                </li>
-                
-            </ul> --}}
+        
 
             <!-- Right Side Of Navbar -->
             <ul class="navbar-nav ms-auto">

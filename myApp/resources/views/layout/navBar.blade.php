@@ -1,7 +1,9 @@
 <div class="main-header" data-background-color="blue">
 			<div class="logo-header">
-				<a href="" class="logo">
-					<img src="../assets/img/logoazzara.svg" alt="navbar brand" class="navbar-brand">
+				<a href="" class="text-white text-decoration-none logo fw-semibold fs-4 d-flex align-items-center gap-2">
+					{{-- <img style="width: 40px" src="../assets/img/logooo.png" alt="navbar brand" class="navbar-brand"> --}}
+					OFPPT
+
 				</a>
 				<button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-expanded="false" aria-label="Toggle navigation">
 					<span class="navbar-toggler-icon">

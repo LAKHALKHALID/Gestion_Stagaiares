@@ -136,7 +136,13 @@ Route::middleware(['is_admin', 'auth'])->group(function () {
     Route::post('/import-stagiaires', [StagiaireController::class, 'import'])->name('import.stagiaires');
 
     Route::get('/import-filieres', [FiliersController::class, 'toImport'])->name('toImport.filieres');
-    Route::get('/import-filieres', [StagiaireController::class, 'import'])->name('import.filieres');
+    Route::post('/import-filieres', [StagiaireController::class, 'import'])->name('import.filieres');
+
+    Route::get('/import-groupes', [FiliersController::class, 'toImport'])->name('toImport.groupess');
+    Route::post('/import-groupes', [StagiaireController::class, 'import'])->name('import.groupess');
+
+    Route::get('/import-inscription', [FiliersController::class, 'toImport'])->name('toImport.inscription');
+    Route::post('/import-inscription', [StagiaireController::class, 'import'])->name('import.inscription');
 });
 
 require __DIR__ . '/auth.php';

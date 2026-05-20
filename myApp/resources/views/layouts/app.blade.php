@@ -21,12 +21,12 @@
 </head>
 <body>
     <div id="app">
-        @include('layouts.navigation')
+        @if (!isset($noNav))
+            @include('layouts.navigation')
+        @endif
+        
 
         <main class="py-4">
-            @if (isset($sideBare))
-                <h1 class="text-danger">I am in layouts</h1>
-            @endif
             @yield('content')
         </main>
     </div>

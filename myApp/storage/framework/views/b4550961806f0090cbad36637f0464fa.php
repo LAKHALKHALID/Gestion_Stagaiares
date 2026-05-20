@@ -66,5 +66,4 @@
     </section>
 
 
-    <!-- How It Works Section -->
 <?php /**PATH D:\Desktop\DEV203\My_project_of_syntese\Gestion_Stagaiares\myApp\resources\views/components/howItsWork.blade.php ENDPATH**/ ?>

@@ -109,4 +109,47 @@ class GroupesController extends Controller
         return redirect()->route('groupes.index')
             ->with('success', 'Groupe supprimé avec succès');
     }
+
+    public function toImport()
+    {
+        return view('groupes.import');
+    }
+
+    public function import(Request $request)
+    {
+        $file = $request->file('file');
+
+        if (!$file) {
+            return back()->with('error', 'No file uploaded');
+        }
+
+        $handle = fopen($file->getRealPath(), 'r');
+
+        $header = true;
+
+
+
+
+        while (($row = fgetcsv($handle, 1000, ',')) !== false) {
+
+            // skip header row
+            if ($header) {
+                $header = false;
+                continue;
+            }
+
+            Groupe::create([
+                'code_g' => $row[0] ?? null,
+                'nom_g' => $row[1] ?? null,
+                'filiere_id' => $row[2] ?? null,
+                'description' => $row[3] ?? null,
+                'capacite' => $row[4] ?? null,
+                
+            ]);
+        }
+
+        fclose($handle);
+
+        return back()->with('success', 'Data imported successfully!');
+    }
 }
