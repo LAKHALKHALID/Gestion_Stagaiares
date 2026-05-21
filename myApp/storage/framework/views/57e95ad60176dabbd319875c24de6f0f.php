@@ -19,7 +19,8 @@
 
               <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           </div>
-        <?php endif; ?>
+        <?php endif; ?> 
+        <a href="<?php echo e(route('toImport.inscription')); ?>" class="btn btn-primary ms-3 mb-4">Import</a>
         <form action="<?php echo e(route('inscription.store')); ?>" method="post" class="mb-3">
           <?php echo csrf_field(); ?>
             <div class="row g-3 align-items-end">

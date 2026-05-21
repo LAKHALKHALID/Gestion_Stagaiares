@@ -17,7 +17,8 @@
               {{ session('refuse') }}
               <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           </div>
-        @endif
+        @endif 
+        <a href="{{route('toImport.inscription')}}" class="btn btn-primary ms-3 mb-4">Import</a>
         <form action="{{route('inscription.store')}}" method="post" class="mb-3">
           @csrf
             <div class="row g-3 align-items-end">

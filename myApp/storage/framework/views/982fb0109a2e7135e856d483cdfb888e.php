@@ -19,7 +19,9 @@
                     Ajouter
             </a>
 
-            
+            <a href="<?php echo e(route('toImport.filieres')); ?>" class="btn btn-primary btn-sm my-3">
+                    import
+            </a>
         
 
         

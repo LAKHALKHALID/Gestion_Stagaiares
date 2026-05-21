@@ -142,7 +142,7 @@ class GroupesController extends Controller
                 'code_g' => $row[0] ?? null,
                 'nom_g' => $row[1] ?? null,
                 'filiere_id' => $row[2] ?? null,
-                'description' => $row[3] ?? null,
+                'desc' => $row[3] ?? null,
                 'capacite' => $row[4] ?? null,
                 
             ]);

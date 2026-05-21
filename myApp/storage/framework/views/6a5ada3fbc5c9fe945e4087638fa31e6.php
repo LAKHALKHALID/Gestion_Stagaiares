@@ -4,11 +4,10 @@
 
 <div class="container my-5">
 
-    <form action="<?php echo e(route('comportements.update',$comportement->id)); ?>"
-          method="POST">
+    <form action="<?php echo e(route('comportements.store')); ?>" method="POST">
 
         <?php echo csrf_field(); ?>
-        <?php echo method_field('PUT'); ?>
+        
 
         
         <div class="row mb-4">
@@ -47,7 +46,6 @@
                 <input type="text"
                         name="cef"
                         readonly
-                        disabled
                         class="form-control"
                         value="<?php echo e($comportement->stagiaire_id); ?>">
 
@@ -69,12 +67,12 @@
                     <div class="form-check">
 
                         <input type="radio"
-                               name="sanction"
-                               value="Mise en garde"
-                               class="form-check-input sanction"
-                               id="mise"
+                                name="sanction"
+                                value="Mise en garde"
+                                class="form-check-input sanction"
+                                id="mise"
 
-                               <?php echo e($comportement->sanction == 'Mise en garde' ? 'checked' : ''); ?>>
+                                <?php echo e($comportement->sanction == 'Mise en garde' ? 'checked' : ''); ?>>
 
                         <label for="mise">
                             Mise en garde
@@ -89,12 +87,12 @@
                     <div class="form-check">
 
                         <input type="radio"
-                               name="sanction"
-                               value="Avertissement"
-                               class="form-check-input sanction"
-                               id="avertissement"
+                                name="sanction"
+                                value="Avertissement"
+                                class="form-check-input sanction"
+                                id="avertissement"
 
-                               <?php echo e($comportement->sanction == 'Avertissement' ? 'checked' : ''); ?>>
+                                <?php echo e($comportement->sanction == 'Avertissement' ? 'checked' : ''); ?>>
 
                         <label for="avertissement">
                             Avertissement
@@ -229,11 +227,11 @@
                         <div class="form-check">
 
                             <input type="radio"
-                                   name="miseEnGarde"
-                                   value="<?php echo e($mise); ?>"
-                                   class="form-check-input"
+                                    name="miseEnGarde"
+                                    value="<?php echo e($mise); ?>"
+                                    class="form-check-input"
 
-                                   <?php echo e($comportement->miseEnGarde == $mise ? 'checked' : ''); ?>>
+                                    <?php echo e($comportement->miseEnGarde == $mise ? 'checked' : ''); ?>>
 
                             <label class="form-check-label">
                                 <?php echo e($mise); ?>
@@ -258,9 +256,9 @@
             </legend>
 
             <input type="date"
-                   name="date"
-                   class="form-control"
-                   value="<?php echo e($comportement->date); ?>">
+                    name="date"
+                    class="form-control"
+                    value="<?php echo e($comportement->date); ?>">
 
         </fieldset>
 

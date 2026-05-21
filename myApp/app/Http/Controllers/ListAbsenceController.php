@@ -8,6 +8,7 @@ use App\Models\Stagiaire;
 use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ListAbsenceController extends Controller
 {
@@ -63,17 +64,25 @@ class ListAbsenceController extends Controller
 
     //     foreach ($absences as $stagiaireId => $absenceDates) {
     //         foreach ($absenceDates as $date => $seances) {
+    //             $total = 0;
+    //             $total += count($seances) * 0.5;
     //             $absence =  Absence::updateOrCreate(
     //                 [
     //                     'stagiaire_id' => $stagiaireId,
     //                     'date' => \Carbon\Carbon::parse($date)->format('Y-m-d'),
     //                 ],
     //                 [
-    //                     'status' => 'Absence',
+    //                     'status' => 'a',
     //                     'seance' => implode(' ;', $seances),
     //                     'startWeek' => \Carbon\Carbon::parse($req->start_date)->format('Y-m-d'),
     //                 ]
     //             );
+    //             $transaction = Transaction::updateOrCreate([
+    //                 'stagiaire_id' => $stagiaireId,
+    //             ], [
+    //                 'note' => $total,
+    //                 'motif' => 'a',
+    //             ]);
 
 
     //         }
@@ -83,36 +92,39 @@ class ListAbsenceController extends Controller
     //     return redirect()->route('listAbsences.index', ["groupe" => $groupe_name, "date" => $date])->with('success', 'Absences mises à jour avec succès !');
     // }
 
-    
 
+
+    
     public function store(Request $req)
     {
         $absences = $req->absences ?? [];
         $groupe = Groupe::where('nom_g', $req->group_name)->first();
+        $dateWeek = \Carbon\Carbon::parse($req->start_date)->format('Y-m-d');
 
-        $dateWeek = Carbon::parse($req->start_date)->format('Y-m-d');
+        // Track point changes per stagiaire across all calculated days in this request
+        $pointsDeltaMap = [];
 
         /*
     |--------------------------------------------------------------------------
-    | 1️⃣ DELETE absences not submitted anymore
+    | 1. CLEANUP: Handle Removed Absences (Unchecked Days)
     |--------------------------------------------------------------------------
     */
-        $groupe->stagiaires->each(function ($stagiaire) use ($absences) {
+        $groupe->stagiaires->each(function ($stagiaire) use ($absences, $dateWeek, &$pointsDeltaMap) {
+            $submittedDates = isset($absences[$stagiaire->cef]) ? array_keys($absences[$stagiaire->cef]) : [];
 
-            if (!array_key_exists($stagiaire->cef, $absences)) {
+            // Find existing database records for this week
+            $oldAbsences = Absence::where('stagiaire_id', $stagiaire->cef)
+                ->where('startWeek', $dateWeek)
+                ->get();
 
-                $oldAbsences = Absence::where('stagiaire_id', $stagiaire->cef)->get();
+            foreach ($oldAbsences as $old) {
+                // If a previously checked date is completely missing now, it means it was unchecked!
+                if (!in_array($old->date, $submittedDates)) {
+                    $oldSeanceCount = $old->seance ? count(explode(' ;', $old->seance)) : 0;
+                    $refundAmount = $oldSeanceCount * 0.5;
 
-                foreach ($oldAbsences as $old) {
-
-                    // 🔁 reverse transaction
-                    $seanceCount = $old->seance ? count(explode(' ;', $old->seance)) : 0;
-
-                    Transaction::create([
-                        'stagiaire_id' => $stagiaire->cef,
-                        'motif' => 'a', // reverse
-                        'note' => - ($seanceCount * 0.5),
-                    ]);
+                    // Mark this value as points to subtract (-) from their history
+                    $pointsDeltaMap[$stagiaire->cef] = ($pointsDeltaMap[$stagiaire->cef] ?? 0) - $refundAmount;
 
                     $old->delete();
                 }
@@ -121,79 +133,75 @@ class ListAbsenceController extends Controller
 
         /*
     |--------------------------------------------------------------------------
-    | 2️⃣ CREATE / UPDATE absences
+    | 2. MERGE: Process Added or Updated Dates
     |--------------------------------------------------------------------------
     */
         foreach ($absences as $stagiaireId => $absenceDates) {
-
             foreach ($absenceDates as $date => $seances) {
+                $dateFormatted = \Carbon\Carbon::parse($date)->format('Y-m-d');
 
-                $dateFormatted = Carbon::parse($date)->format('Y-m-d');
+                $newSeanceCount = count($seances);
+                $newPenalty = $newSeanceCount * 0.5;
 
-                $existing = Absence::where('stagiaire_id', $stagiaireId)
+                // Look up what they originally owed for this specific date
+                $existingAbsence = Absence::where('stagiaire_id', $stagiaireId)
                     ->where('date', $dateFormatted)
                     ->first();
 
-                $note = count($seances) * 0.5;
-
-                $data = [
-                    'status' => 'Absence',
-                    'seance' => implode(' ;', $seances),
-                    'startWeek' => $dateWeek,
-                ];
-
-                if ($existing) {
-
-                    /*
-                |-------------------------
-                | 🔁 UPDATE
-                |-------------------------
-                */
-
-                    // reverse old transaction first
-                    $oldCount = $existing->seance ? count(explode(' ;', $existing->seance)) : 0;
-
-                    Transaction::create([
-                        'stagiaire_id' => $stagiaireId,
-                        'motif' => 'a',
-                        'note' => - ($oldCount * 0.5),
-                    ]);
-
-                    // update absence
-                    $existing->update($data);
-
-                    // add new transaction
-                    Transaction::create([
-                        'stagiaire_id' => $stagiaireId,
-                        'motif' => 'a',
-                        'note' => $note,
-                    ]);
-                } else {
-
-                    /*
-                |-------------------------
-                | ➕ CREATE
-                |-------------------------
-                */
-
-                    Absence::create(array_merge([
-                        'stagiaire_id' => $stagiaireId,
-                        'date' => $dateFormatted,
-                    ], $data));
-
-                    Transaction::create([
-                        'stagiaire_id' => $stagiaireId,
-                        'motif' => 'a',
-                        'note' => $note,
-                    ]);
+                $oldPenalty = 0;
+                if ($existingAbsence) {
+                    $oldSeanceCount = $existingAbsence->seance ? count(explode(' ;', $existingAbsence->seance)) : 0;
+                    $oldPenalty = $oldSeanceCount * 0.5;
                 }
+
+                // Delta = New Penalty - Old Penalty
+                $dayDelta = $newPenalty - $oldPenalty;
+                $pointsDeltaMap[$stagiaireId] = ($pointsDeltaMap[$stagiaireId] ?? 0) + $dayDelta;
+
+                // Perform your updateOrCreate on the Absence table safely
+                Absence::updateOrCreate(
+                    [
+                        'stagiaire_id' => $stagiaireId,
+                        'date'         => $dateFormatted,
+                    ],
+                    [
+                        'status'    => 'a',
+                        'seance'    => implode(' ;', $seances),
+                        'startWeek' => $dateWeek,
+                    ]
+                );
             }
         }
 
-        return redirect()->route('listAbsences.index', [
-            "groupe" => $req->group_name ?? "",
-            "date" => $req->start_date ?? ""
-        ])->with('success', 'Absences mises à jour avec succès !');
+        /*
+    |--------------------------------------------------------------------------
+    | 3. TRANSACTION LEDGER: Write unique rows for this weekly submission
+    |--------------------------------------------------------------------------
+    */
+        foreach ($pointsDeltaMap as $stagiaireId => $totalDelta) {
+            // Only write a ledger record if their attendance configuration actually changed
+            if ($totalDelta != 0) {
+                Transaction::updateOrCreate(
+                    [
+                        'stagiaire_id' => $stagiaireId,
+                        // Unique link constraint ensuring one historical record block per student per week
+                        'motif'        => 'a',
+                    ],
+                    [
+                        // Increment/Decrement logic using database values protection
+                        'note'         => DB::raw("note + $totalDelta"),
+                        'created_at'   => now()->startOfDay(),
+                        
+                    ]
+                );
+            }
+        }
+
+        $groupe_name = $req?->group_name ?? "";
+        $date = $req?->start_date ?? "";
+
+        return redirect()->route('listAbsences.index', ["groupe" => $groupe_name, "date" => $date])
+            ->with('success', 'Absences et transactions mises à jour avec succès !');
     }
 
     /**

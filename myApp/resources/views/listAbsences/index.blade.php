@@ -4,6 +4,7 @@
 
 @section('content')
 
+
     <div class="container">
         <form action="{{ route('listAbsences.index') }}" method="get" class="my-4">
             <div class="row">

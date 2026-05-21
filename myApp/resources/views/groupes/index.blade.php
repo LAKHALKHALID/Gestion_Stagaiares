@@ -17,6 +17,7 @@
 
             <a href="{{ route('groupes.create') }}" class="btn btn-primary btn-sm"> Ajouter
             </a>
+            <a href="{{route('toImport.groupes')}}" class="btn btn-primary  btn-sm ms-3">Import</a>
         
 
         

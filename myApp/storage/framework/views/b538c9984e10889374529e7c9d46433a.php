@@ -79,6 +79,8 @@
                 <td><?php echo e($st->nom_annee_scolaire); ?></td>
                 <td><?php echo e($st->niveau_formation); ?></td>
                 <td class="d-flex gap-1">
+
+                  
                   <a href="<?php echo e(route('stagiaires.show',['cef'=>$st->cef])); ?>" class="btn btn-sm btn-primary">show</a>
                   <a href="<?php echo e(route('stagiaires.edit',['cef'=>$st->cef])); ?>" class="btn btn-sm btn-success mx-2">edit</a>
                   

@@ -1,5 +1,5 @@
 
-    @extends('layout.app')
+    
     
     <style>
         body{
@@ -88,15 +88,15 @@
         }
     </style>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 
-    @if ($stagiaires && $stagiaires != '')
+    <?php if($stagiaires && $stagiaires != ''): ?>
         <div class="container">
           <div class="attestation-container">
 
               <!-- Logo -->
               <div class="text-center">
-                  <img style="width: 100px" src="{{asset('images/OFPPT.png')}}" class="logo mb-2" alt="OFPPT Logo">
+                  <img style="width: 100px" src="<?php echo e(asset('images/OFPPT.png')); ?>" class="logo mb-2" alt="OFPPT Logo">
 
                   
               </div>
@@ -111,7 +111,7 @@
 
                   <p>
                       <span class="label">Réf :</span>
-                      CFP/ISTA AD / {{$stagiaires->groupes[0]->nom_g}} /N°329 /2026
+                      CFP/ISTA AD / <?php echo e($stagiaires->groupes[0]->nom_g); ?> /N°329 /2026
                   </p>
 
                   <p>
@@ -124,33 +124,37 @@
 
                   <p>
                       Atteste que le stagiaire :
-                      <strong>{{strtoupper($stagiaires->nom_francais.' '.$stagiaires->prenom_francais)}}</strong>
+                      <strong><?php echo e(strtoupper($stagiaires->nom_francais.' '.$stagiaires->prenom_francais)); ?></strong>
                   </p>
 
                   <p>
                       <span class="label">Né le :</span>
-                      {{$stagiaires->date_naissance}}
+                      <?php echo e($stagiaires->date_naissance); ?>
+
                       &nbsp;&nbsp;&nbsp;&nbsp;
 
                       <span class="label">à</span>
-                      {{$stagiaires->lieu_naissance }}
+                      <?php echo e($stagiaires->lieu_naissance); ?>
+
 
                   </p>
 
                   <p>
                       <span class="label">Niveau de formation :</span>
-                      {{$stagiaires->niveau_formation}}
+                      <?php echo e($stagiaires->niveau_formation); ?>
+
 
                   </p>
 
                   <p>
                       <span class="label">Spécialité :</span>
-                      {{$stagiaires->filieres[0]->nom_filiere_francais	}} 
+                      <?php echo e($stagiaires->filieres[0]->nom_filiere_francais); ?> 
                   </p>
 
                   <p>
                       <span class="label">En :</span>
-                    {{$stagiaires->annee_etude}}
+                    <?php echo e($stagiaires->annee_etude); ?>
+
 
                   </p>
 
@@ -158,7 +162,8 @@
                       <div class="col-md-6">
                           <p>
                               <span class="label">Type Formation :</span>
-                              {{$stagiaires->type_formation}}
+                              <?php echo e($stagiaires->type_formation); ?>
+
 
                           </p>
                       </div>
@@ -166,7 +171,7 @@
                       <div class="col-md-6">
                           <p>
                               <span class="label">Mode :</span>
-                              {{$stagiaires->filieres[0]->mode_formation	}} 
+                              <?php echo e($stagiaires->filieres[0]->mode_formation); ?> 
 
                           </p>
                       </div>
@@ -174,17 +179,20 @@
 
                   <p>
                       <span class="label">N° d'inscription :</span>
-                      {{$stagiaires->cef}}
+                      <?php echo e($stagiaires->cef); ?>
+
                   </p>
 
                   <p>
                       <span class="label">Année de Formation :</span>
-                      {{$stagiaires->annee_etude}}
+                      <?php echo e($stagiaires->annee_etude); ?>
+
                   </p>
 
                   <p>
                       - Poursuit sa formation à l’établissement depuis :
-                      {{date('Y')}}
+                      <?php echo e(date('Y')); ?>
+
                   </p>
 
                   <br>
@@ -196,7 +204,8 @@
 
                   <div class="text-end">
                       <p>
-                          Fait à Fès le : {{date("d/m/Y")}}
+                          Fait à Fès le : <?php echo e(date("d/m/Y")); ?>
+
                       </p>
                   </div>
 
@@ -223,15 +232,15 @@
 
           </div>
         </div>
-    @endif
+    <?php endif; ?>
         
-    @if ($groupes && $groupes !='')
+    <?php if($groupes && $groupes !=''): ?>
         <div class="container my-4 sheet">
 
             <!-- HEADER -->
             <div class="header-box">
                 <h5 class="title">INSTITUT SPECIALISE DE TECHNOLOGIE APPLIQUEE</h5>
-                <p class="subtitle">Année de Formation : {{$groupes->stagiaires[0]->nom_annee_scolaire}}</p>
+                <p class="subtitle">Année de Formation : <?php echo e($groupes->stagiaires[0]->nom_annee_scolaire); ?></p>
                 <p class="subtitle">PV de Présence - Contrôle Continu</p>
             </div>
 
@@ -251,7 +260,7 @@
                     <th>Heure de démarrage</th>
                 </tr>
                 <tr>
-                  <td>{{$groupes->nom_g}}</td>
+                  <td><?php echo e($groupes->nom_g); ?></td>
                   <td>Théorique</td>
                   <td></td>
                   <td></td>
@@ -272,18 +281,18 @@
                 </thead>
 
                 <tbody>
-                    @foreach ($groupes->stagiaires as $index => $stagiaire)
+                    <?php $__currentLoopData = $groupes->stagiaires; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $stagiaire): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <tr>
-                          <td>{{$index}}</td>
-                          <td>{{$stagiaire->cef}}</td>
-                          <td>{{strtoupper($stagiaire->nom_francais.' '.$stagiaire->nom_francais)}}</td>
+                          <td><?php echo e($index); ?></td>
+                          <td><?php echo e($stagiaire->cef); ?></td>
+                          <td><?php echo e(strtoupper($stagiaire->nom_francais.' '.$stagiaire->nom_francais)); ?></td>
                           <td></td>
                           <td></td>
                           <td></td>
 
 
                         </tr>
-                    @endforeach
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
 
@@ -301,9 +310,11 @@
             </table>
 
         </div>
-    @endif
+    <?php endif; ?>
     
 
-@endsection
+<?php $__env->stopSection(); ?>
 
 
+
+<?php echo $__env->make('layout.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Desktop\DEV203\My_project_of_syntese\Gestion_Stagaiares\myApp\resources\views/documents/attestation.blade.php ENDPATH**/ ?>

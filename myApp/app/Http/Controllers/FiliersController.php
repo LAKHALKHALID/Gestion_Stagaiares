@@ -131,7 +131,7 @@ class FiliersController extends Controller
                 'nom_filiere_francais' => $row[1] ?? null,
                 'nom_filiere_arabe' => $row[2] ?? null,
                 'mode_formation'=> $row[3] ?? null,
-                'description'=> $row[4] ?? null,
+                'desc'=> $row[4] ?? null,
                 'secteur'=> $row[5] ?? null,
             ]);
         }

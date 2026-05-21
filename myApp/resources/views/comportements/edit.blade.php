@@ -4,11 +4,10 @@
 
 <div class="container my-5">
 
-    <form action="{{ route('comportements.update',$comportement->id) }}"
-          method="POST">
+    <form action="{{ route('comportements.store') }}" method="POST">
 
         @csrf
-        @method('PUT')
+        {{-- @method('PUT') --}}
 
         {{-- MOTIF + CEF --}}
         <div class="row mb-4">
@@ -47,7 +46,6 @@
                 <input type="text"
                         name="cef"
                         readonly
-                        disabled
                         class="form-control"
                         value="{{ $comportement->stagiaire_id }}">
 
@@ -69,12 +67,12 @@
                     <div class="form-check">
 
                         <input type="radio"
-                               name="sanction"
-                               value="Mise en garde"
-                               class="form-check-input sanction"
-                               id="mise"
+                                name="sanction"
+                                value="Mise en garde"
+                                class="form-check-input sanction"
+                                id="mise"
 
-                               {{ $comportement->sanction == 'Mise en garde' ? 'checked' : '' }}>
+                                {{ $comportement->sanction == 'Mise en garde' ? 'checked' : '' }}>
 
                         <label for="mise">
                             Mise en garde
@@ -89,12 +87,12 @@
                     <div class="form-check">
 
                         <input type="radio"
-                               name="sanction"
-                               value="Avertissement"
-                               class="form-check-input sanction"
-                               id="avertissement"
+                                name="sanction"
+                                value="Avertissement"
+                                class="form-check-input sanction"
+                                id="avertissement"
 
-                               {{ $comportement->sanction == 'Avertissement' ? 'checked' : '' }}>
+                                {{ $comportement->sanction == 'Avertissement' ? 'checked' : '' }}>
 
                         <label for="avertissement">
                             Avertissement
@@ -229,11 +227,11 @@
                         <div class="form-check">
 
                             <input type="radio"
-                                   name="miseEnGarde"
-                                   value="{{ $mise }}"
-                                   class="form-check-input"
+                                    name="miseEnGarde"
+                                    value="{{ $mise }}"
+                                    class="form-check-input"
 
-                                   {{ $comportement->miseEnGarde == $mise ? 'checked' : '' }}>
+                                    {{ $comportement->miseEnGarde == $mise ? 'checked' : '' }}>
 
                             <label class="form-check-label">
                                 {{ $mise }}
@@ -257,9 +255,9 @@
             </legend>
 
             <input type="date"
-                   name="date"
-                   class="form-control"
-                   value="{{ $comportement->date }}">
+                    name="date"
+                    class="form-control"
+                    value="{{ $comportement->date }}">
 
         </fieldset>
 
