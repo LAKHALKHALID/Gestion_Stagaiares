@@ -60,6 +60,7 @@
      <?php echo $__env->yieldPushContent('scripts'); ?>
     <?php echo $__env->yieldContent("js_script"); ?>
 
+    
     <script src="<?php echo e(asset('assets/js/setting-demo.js')); ?>"></script>
     <script src="<?php echo e(asset('assets/js/JsBarcode.all.min.js')); ?>"></script>
     <script src="<?php echo e(asset('assets/js/ready.min.js')); ?>"></script>

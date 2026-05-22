@@ -158,10 +158,14 @@ class StagiaireController extends Controller
     public function import(Request $request)
     {
         $file = $request->file('file');
-
+        // return $request->file('file')->extension();
         if (!$file) {
             return back()->with('error', 'No file uploaded');
         }
+        if ($file && $file->extension() !== 'csv') {
+            return back()->with('error', 'You should upload a csv file !');
+        }
+
 
         $handle = fopen($file->getRealPath(), 'r');
         
@@ -177,6 +181,17 @@ class StagiaireController extends Controller
                 $header = false;
                 continue;
             }
+            $cef = $row[0] ?? null;
+            $cin = $row[1] ?? null;
+
+            // 1. Check if the CEF already exists in the database
+            if ($cef && Stagiaire::where('cef', $cef)->exists()) {
+                continue; // Skip this row and move to the next one
+            }
+            // 2. Skip if CEF is null/empty OR if CIN is null/empty
+            if (empty($cef) || empty($cin)) {
+                continue;
+            }
 
             Stagiaire::create([
                 'cef' => $row[0] ?? null,
@@ -185,7 +200,7 @@ class StagiaireController extends Controller
                 'prenom_francais' => $row[3] ?? null,
                 'nom_arabe' => $row[4] ?? null,
                 'prenom_arabe' => $row[5] ?? null,
-                'date_naissance' => Carbon::createFromFormat('m/d/Y', $row[6])->format('Y-m-d') ?? null,
+                'date_naissance' => Carbon::parse($row[6])->format('Y-m-d') ?? null,
                 'lieu_naissance' => $row[7] ?? null,
                 'niveau_formation' => $row[8] ?? null,
                 'type_formation' => $row[9] ?? null,

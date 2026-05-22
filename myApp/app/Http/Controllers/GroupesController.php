@@ -131,13 +131,24 @@ class GroupesController extends Controller
 
 
         while (($row = fgetcsv($handle, 1000, ',')) !== false) {
-
+            
             // skip header row
             if ($header) {
                 $header = false;
                 continue;
             }
-
+            if ($file && $file->extension() !== 'csv') {
+                return back()->with('error', 'You should upload a csv file !');
+            }
+            $code_g = $row[0] ?? null;
+            $nom_g = $row[1] ?? null;
+            $filiere_id = $row[2] ?? null;
+            if(empty($code_g) || empty($nom_g) || empty($filiere_id)){
+                continue; // Skip if any of the required fields are missing
+            }
+            if (Groupe::where('code_g', $code_g)->exists()) {
+                continue; // Skip if code_g already exists in the database
+            }
             Groupe::create([
                 'code_g' => $row[0] ?? null,
                 'nom_g' => $row[1] ?? null,

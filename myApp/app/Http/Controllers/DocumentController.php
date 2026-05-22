@@ -12,36 +12,15 @@ use App\Models\Groupe;
 use App\Models\Stagiaire;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
+use PhpOption\Option;
 
 class DocumentController extends Controller
 {
     
     public function index(Request $req)
     {
-        $value = $req->group_or_cef;
-
-        // default queries
-        $stagiaires = '';
-        $groupes = '';
-
-        if ($value) {
-
-            // 1. Check in stagiaires (CEF)
-            $stagiaire = Stagiaire::where('cef', $value)->first();
-
-            if ($stagiaire) {
-                $stagiaires = Stagiaire::find( $value);
-            }
-
-            // 2. Check in groupes (code_g)
-            $groupe = Groupe::where('code_g', $value)->first();
-
-            if ($groupe) {
-                $groupes = Groupe::find( $value);
-            }
-        }
-        // return $groupes;
-        return view('documents.attestation', compact('stagiaires', 'groupes'));
+        
+        return view('documents.index');
     }
 
     public function dashboard(){
@@ -70,5 +49,42 @@ class DocumentController extends Controller
             ->where('type_retrait', 'Retrait Provisoire')
             ->paginate(5);
         return view('dashboard',compact('groupes', 'stagiaires_no_active', 'filieres', 'stagiaires', 'absences', 'engagements', 'retraitbac', 'deperdition', 'comportement'));
+    }
+
+    public function search(Request $request){
+
+        $cef_groupe = $request->cef_groupe;
+        $option = $request->option;
+
+
+        if($cef_groupe && $option =='engagement'){
+            $stagiaire = Stagiaire::find($cef_groupe);
+            return $stagiaire ? view('documents.engagement', compact('stagiaire')) 
+            : back()->with('error', 'cef or groupe not correct!'); 
+
+        }
+        elseif($cef_groupe && $option == 'demande'){
+            $stagiaire = Stagiaire::find($cef_groupe);
+            return $stagiaire ? view('documents.demande', compact('stagiaire'))
+                : back()->with('error', 'cef or groupe not correct!');
+        } 
+        elseif ($cef_groupe && $option == 'controle_continu') {
+            $groupe = Groupe::where('nom_g', $cef_groupe)->first();
+            return $groupe ? view('documents.controle_continue', compact('groupe'))
+                : back()->with('error', 'cef or groupe not correct!');
+        } 
+        elseif ($cef_groupe && $option == 'fin_module') {
+            $groupe = Groupe::where('nom_g', $cef_groupe)->first();
+            return $groupe ? view('documents.fin_module', compact('groupe'))
+                : back()->with('error', 'cef or groupe not correct!');
+        } 
+        elseif ($cef_groupe && $option == 'regional') {
+            $groupe = Groupe::where('nom_g', $cef_groupe)->first();
+            return $groupe ? view('documents.regional', compact('groupe'))
+                : back()->with('error', 'cef or groupe not correct!');
+        }
+        else{
+            return  back()->with('error', 'you should select one option');
+        }
     }
 }

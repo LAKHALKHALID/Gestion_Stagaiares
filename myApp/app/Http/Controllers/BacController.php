@@ -15,6 +15,7 @@ class BacController extends Controller
     {
         // if($request->is_returned) return $request;
         if($request->is_returned && $request->id ){
+            // return $request;
             $is_returned = (int) $request->is_returned;
             $retraitBacs = Bac::find($request->id);
             $retraitBacs->update([

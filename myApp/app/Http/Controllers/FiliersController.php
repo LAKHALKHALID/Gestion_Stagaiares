@@ -126,6 +126,18 @@ class FiliersController extends Controller
                 continue;
             }
 
+            $code_f= $row[0] ?? null;
+            if ($file && $file->extension() !== 'csv') {
+                return back()->with('error', 'You should upload a csv file !');
+            }
+            if ($file && $file->extension() !== 'csv') {
+                return back()->with('error', 'You should upload a csv file !');
+            }
+
+            if (Filiere::where('code_f', $code_f)->exists()) {
+                continue; // Skip if code_g already exists in the database
+            }
+
             Filiere::create([
                 'code_f'=> $row[0] ?? null,
                 'nom_filiere_francais' => $row[1] ?? null,

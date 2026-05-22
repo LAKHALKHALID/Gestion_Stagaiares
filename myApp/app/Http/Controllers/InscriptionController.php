@@ -65,6 +65,9 @@ class InscriptionController extends Controller
         if (!$file) {
             return back()->with('error', 'No file uploaded');
         }
+        if ($file && $file->extension() !== 'csv') {
+            return back()->with('error', 'You should upload a csv file !');
+        }
 
         $handle = fopen($file->getRealPath(), 'r');
         $header = true;
@@ -83,6 +86,7 @@ class InscriptionController extends Controller
             if (!$cef) {
                 continue; // Skip if no CEF identifier
             }
+            
 
             // 2. Find or Create the Stagiaire so we don't duplicate records
             $stagiaire = Stagiaire::find($cef);

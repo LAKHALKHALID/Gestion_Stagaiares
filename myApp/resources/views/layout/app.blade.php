@@ -60,6 +60,7 @@
      @stack('scripts')
     @yield("js_script")
 
+    
     <script src="{{ asset('assets/js/setting-demo.js') }}"></script>
     <script src="{{ asset('assets/js/JsBarcode.all.min.js') }}"></script>
     <script src="{{ asset('assets/js/ready.min.js') }}"></script>

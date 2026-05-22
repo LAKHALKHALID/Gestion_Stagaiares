@@ -129,6 +129,9 @@ Route::middleware(['is_admin', 'auth'])->group(function () {
 
     Route::controller(DocumentController::class)->group(function () {
         Route::get('/document', 'index')->name('document.index');
+        Route::post('/document','search')->name('document.search');
+        // Route::get('/document/engagement', 'search')->name('document.index');
+
         Route::get('/dashboard', 'dashboard')->name('document.dashboard');
     });
 

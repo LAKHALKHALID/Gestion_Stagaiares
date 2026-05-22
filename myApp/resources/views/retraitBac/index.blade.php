@@ -45,22 +45,37 @@
                   <td>{{$item->date_retrait}}</td>
                   <td>{{$item->date_retour}}</td>
                   <td>
-                    <form action="{{ route('retraitBac.index') }}" method="GET">
+                    {{-- <form action="{{ route('retraitBac.index') }}" method="GET">
                         <div class="form-check form-switch d-flex align-items-center">
 
-                            <input 
-                            checked data-toggle="toggle" data-onstyle="primary" data-style="btn-round"
+                            <input data-toggle="toggle" data-onstyle="primary" data-style="btn-round"
                                   type="checkbox"
                                   name="is_returned"
-                                  value="1"
+                                  value="{{$item->is_returned}}"
                                   {{ $item->is_returned ? 'checked' : '' }}
                                   onclick="return confirm('Are you sure this Stagiaire returned the Bac?')"
                                   onchange="this.form.submit()">
 
                         </div>
                         <input type="hidden" name="id" value="{{$item->id}}">
+                    </form> --}}
+
+                    <!-- Added class="toggle-form" to the form -->
+                    <form action="{{ route('retraitBac.index') }}" method="GET" class="toggle-form">
+                        <div class="form-check form-switch d-flex align-items-center">
+
+                            <input data-toggle="toggle" 
+                                  data-onstyle="primary" 
+                                  data-style="btn-round"
+                                  type="checkbox"
+                                  name="is_returned"
+                                  value="1"
+                                  {{ $item->is_returned ? 'checked' : '' }}>
+
+                        </div>
+                        <input type="hidden" name="id" value="{{$item->id}}">
                     </form>
-                  </td>
+                                      </td>
                   <td class="">
                     <a href="{{route('retraitBac.edit',['id'=>$item->id])}}" class="btn btn-success">Edit</a>
                     
@@ -74,5 +89,24 @@
     </div>
   
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Listen to changes on the checkbox, specifically working with the bootstrap-toggle plugin
+    $('.toggle-form input[type="checkbox"]').change(function(e) {
+        let checkbox = $(this);
+        let form = checkbox.closest('form');
 
+        // Show confirmation popup
+        if (confirm('Are you sure this Stagiaire returned the Bac?')) {
+            // If they clicked OK, manually submit this specific form
+            form.submit();
+        } else {
+            // If they canceled, reset the visual switch state without re-triggering this event
+            e.preventDefault();
+            checkbox.bootstrapToggle('toggle', true); 
+        }
+    });
+});
+</script>
 @endsection

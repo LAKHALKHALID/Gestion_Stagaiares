@@ -9,6 +9,7 @@ use App\Models\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class ListAbsenceController extends Controller
 {
@@ -179,6 +180,7 @@ class ListAbsenceController extends Controller
     |--------------------------------------------------------------------------
     */
         foreach ($pointsDeltaMap as $stagiaireId => $totalDelta) {
+            // return $totalDelta;
             // Only write a ledger record if their attendance configuration actually changed
             if ($totalDelta != 0) {
                 Transaction::updateOrCreate(
@@ -194,7 +196,16 @@ class ListAbsenceController extends Controller
                         
                     ]
                 );
+                $data = Transaction::where('stagiaire_id', $stagiaireId)->where('motif', 'a')->first();
+                if (floatval($data->note) > 2) {
+                    $response = Http::post('http://localhost:5678/webhook/ac26f4e1-4904-4bfd-aab2-288d139fc1ee', [
+                        "name" => Stagiaire::where('cef', $stagiaireId)->first()->nom_francais . ' ' . Stagiaire::where('cef', $stagiaireId)->first()->prenom_francais,
+
+                        'email' => 'hamadalmodir@gmail.com'
+                    ]);
+                }
             }
+            
         }
 
         $groupe_name = $req?->group_name ?? "";
