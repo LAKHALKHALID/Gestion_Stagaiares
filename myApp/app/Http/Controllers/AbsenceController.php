@@ -11,24 +11,7 @@ use Illuminate\Support\Facades\Session;
 
 class AbsenceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index(Request $req)
-    // {
-
-    //     $st = Stagiaire::find($req->cef);
-    //     if($st && $req->cef){
-
-    //         $absences =$st->absences;
-    //     }
-    //     else{
-    //         $absences = Absence::all();
-
-    //     }
-
-    //     return view('absences.index',compact('absences'));
-    // }
+    
 
     public function index(Request $req)
     {

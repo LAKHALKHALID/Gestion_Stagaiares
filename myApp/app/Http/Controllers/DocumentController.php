@@ -70,18 +70,26 @@ class DocumentController extends Controller
         } 
         elseif ($cef_groupe && $option == 'controle_continu') {
             $groupe = Groupe::where('nom_g', $cef_groupe)->first();
-            return $groupe ? view('documents.controle_continue', compact('groupe'))
-                : back()->with('error', 'cef or groupe not correct!');
+            if ($groupe) {
+                return view('documents.controle_continue', compact('groupe'));
+            }
+
+            return back()->with('error', 'cef or groupe not correct!');
         } 
         elseif ($cef_groupe && $option == 'fin_module') {
             $groupe = Groupe::where('nom_g', $cef_groupe)->first();
-            return $groupe ? view('documents.fin_module', compact('groupe'))
-                : back()->with('error', 'cef or groupe not correct!');
+            if ($groupe) {
+
+                return view('documents.fin_module', compact('groupe'));
+            }
+            
         } 
         elseif ($cef_groupe && $option == 'regional') {
             $groupe = Groupe::where('nom_g', $cef_groupe)->first();
-            return $groupe ? view('documents.regional', compact('groupe'))
-                : back()->with('error', 'cef or groupe not correct!');
+            if ($groupe) {
+
+                return view('documents.regional', compact('groupe'));
+            }
         }
         else{
             return  back()->with('error', 'you should select one option');

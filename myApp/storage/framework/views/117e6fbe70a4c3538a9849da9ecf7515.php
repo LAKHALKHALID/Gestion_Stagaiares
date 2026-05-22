@@ -72,13 +72,13 @@
         table {
             width: 100%;
             border-collapse: collapse;
-            font-size: 0.85rem;
+            font-size: 14px;
             margin-bottom: 20px;
         }
 
         th, td {
             border: 1px solid #000000;
-            padding: 7px 8px;
+            padding: 0px 8px;
             text-align: left;
             vertical-align: middle;
         }
@@ -100,7 +100,7 @@
 
         /* Main Trainee List Table Layout Column Sizes */
         .students-table th {
-            padding: 10px 5px;
+            /* padding: 10px 5px; */
         }
 
         .col-id { width: 4%; text-align: center; }
@@ -119,7 +119,7 @@
             padding: 6px;
         }
         .examiner-table td {
-            height: 75px; 
+            height: 30px; 
         }
 
         .footer-copies-count {
@@ -153,14 +153,13 @@
 <div class="pv-container" id="printSection">
 
     <div class="header-section">
-        <div class="logo-placeholder">OFPPT</div>
         <div class="institute-name">INSTITUT SPECIALISE DE TECHNOLOGIE APPLIQUEE HAY AL ADARISSA FES</div>
         <div class="academic-year">Année de Formation : 2025/2026</div>
-        <div class="pv-title">PV de Présence Contrôle Continu</div>
+        <div class="pv-title">PV de Présence d'Examen de Fin de Module</div>
     </div>
 
     <div class="module-field">
-        Intitulé du Module : <span class="dots-line">........................................................................................................................</span>
+        Intitulé du Module : ........................................................................................................................
     </div>
 
     <table class="meta-table">
@@ -174,8 +173,8 @@
         </thead>
         <tbody>
             <tr>
-                <td style="font-weight: bold;">DOWFS 203</td>
-                <td>Théorique</td>
+                <td style="font-weight: bold;"><?php echo e($groupe->nom_g); ?></td>
+                <td>Synthese</td>
                 <td></td>
                 <td></td>
             </tr>
@@ -193,30 +192,24 @@
                 <th class="col-obs">Observation</th>
             </tr>
         </thead>
+            <?php
+                    $stagiaires = $groupe->stagiaires->sortBy('nom_francais');
+            ?>
         <tbody>
-            <tr><td class="center-text">1</td><td class="center-text">2005092800161</td><td>AMIRACHE SOUFYANE</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">2</td><td class="center-text">2007010200182</td><td>BELAOULA LAILA</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">3</td><td class="center-text">2002081000515</td><td>BEN YOUNES ANASS</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">4</td><td class="center-text">2002112600451</td><td>BENACHER SOFIYANE</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">5</td><td class="center-text">2006010200376</td><td>BENHADDOU ZINEB</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">6</td><td class="center-text">2005080100177</td><td>BENNANI GABSI MOHAMED</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">7</td><td class="center-text">2006010800125</td><td>CHINOUN MOHAMED</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">8</td><td class="center-text">2002082300399</td><td>EL BOUCHRIFI OUSSAMA</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">9</td><td class="center-text">2003021500502</td><td>EL BSIR MERYEM</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">10</td><td class="center-text">2004043000351</td><td>EL MOUSSAOUI MEHDI</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">11</td><td class="center-text">2006091700125</td><td>EL-ABBADI HALA</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">12</td><td class="center-text">2004110800336</td><td>EL-ASRI FATIMA ZAHRAE</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">13</td><td class="center-text">2006052500146</td><td>EL-JAZOULI HAFSA</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">14</td><td class="center-text">2006101000209</td><td>ELJOKH AYA</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">15</td><td class="center-text">2005061500203</td><td>ESSAKHI MOSTAFA</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">16</td><td class="center-text">2005111500342</td><td>EZZAAT ACHRAF</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">17</td><td class="center-text">2005101700288</td><td>GOUJJAN MOHAMMED</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">18</td><td class="center-text">2000112000678</td><td>LAKHAL KHALID</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">19</td><td class="center-text">2006010100867</td><td>LAROUSSI AMINE</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">20</td><td class="center-text">2007012900144</td><td>MOUDDAN ASMAE</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">21</td><td class="center-text">2006092400134</td><td>RACHIK AYOUB</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">22</td><td class="center-text">2005051300140</td><td>SAMSAR SANAE</td><td></td><td></td><td></td></tr>
-            <tr><td class="center-text">23</td><td class="center-text">2002051000499</td><td>ZOUMI MOHAMMED</td><td></td><td></td><td></td></tr>
+            <?php $__currentLoopData = $stagiaires; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stagiaire): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+            <?php
+                $fullName = $stagiaire->nom_francais.' '.$stagiaire->prenom_francais;
+            ?>
+                <tr>
+                    <td class="center-text"><?php echo e($loop->iteration); ?></td>
+                    <td class="center-text"><?php echo e($stagiaire->cef); ?></td>
+                    <td> <?php echo e(strtoupper($fullName)); ?> </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            
         </tbody>
     </table>
 
