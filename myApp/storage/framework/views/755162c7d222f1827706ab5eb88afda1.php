@@ -1,20 +1,21 @@
 
 
-@extends('layout.app')
 
-@section('content')
+
+<?php $__env->startSection('content'); ?>
 
 <div class="container my-5">
-  @if (session('error'))
+  <?php if(session('error')): ?>
           <div class="alert alert-danger alert-dismissible fade show" role="alert">
-              {{ session('error') }}
+              <?php echo e(session('error')); ?>
+
               <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
           </div>
-        @endif
-    <form action="{{ route('comportements.store') }}" method="POST">
-        @csrf
+        <?php endif; ?>
+    <form action="<?php echo e(route('comportements.store')); ?>" method="POST">
+        <?php echo csrf_field(); ?>
 
-        {{-- MOTIF + CEF --}}
+        
         <div class="row mb-4">
 
             <div class="col-md-6">
@@ -38,7 +39,7 @@
 
         </div>
 
-        {{-- SANCTION --}}
+        
         <fieldset class="border p-3 mb-4">
 
             <legend class="float-none w-auto px-2">
@@ -105,7 +106,7 @@
 
         </fieldset>
 
-        {{-- AUTORITE --}}
+        
         <fieldset class="border p-3 mb-4">
 
             <legend class="float-none w-auto px-2">
@@ -172,7 +173,7 @@
 
         </fieldset>
 
-        {{-- MISE EN GARDE --}}
+        
         <fieldset class="border p-3 mb-4"
                   id="miseContainer"
                   style="display: none;">
@@ -187,7 +188,7 @@
 
         </fieldset>
 
-        {{-- DATE --}}
+        
         <fieldset class="border p-3 mb-4">
 
             <legend class="float-none w-auto px-2">
@@ -306,5 +307,7 @@
 
 </script>
 
-@endsection
+<?php $__env->stopSection(); ?>
 
+
+<?php echo $__env->make('layout.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Desktop\DEV203\My_project_of_syntese\Gestion_Stagaiares\myApp\resources\views/comportements/create.blade.php ENDPATH**/ ?>

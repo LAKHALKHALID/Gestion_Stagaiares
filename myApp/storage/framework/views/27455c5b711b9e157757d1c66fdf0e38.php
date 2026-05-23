@@ -1,10 +1,10 @@
-@extends('layout.app')
 
 
-@section('title','create')
+
+<?php $__env->startSection('title','create'); ?>
 
 
-@section('content')
+<?php $__env->startSection('content'); ?>
 <style>
 .form-checkl-new{
     display: flex;
@@ -32,15 +32,16 @@
         </div>
 
         <div class="card-body">
-                @if (session('error'))
+                <?php if(session('error')): ?>
                     <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
-                        {{ session('error') }}
+                        <?php echo e(session('error')); ?>
+
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
-                @endif
+                <?php endif; ?>
                 
-            <form action="{{ route('absences.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
+            <form action="<?php echo e(route('absences.store')); ?>" method="POST" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
 
                 <div class="row mb-4">
                     <div class="col-md-6">
@@ -125,4 +126,5 @@
     </div>
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Desktop\DEV203\My_project_of_syntese\Gestion_Stagaiares\myApp\resources\views/absences/create.blade.php ENDPATH**/ ?>

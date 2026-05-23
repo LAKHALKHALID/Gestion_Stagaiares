@@ -1,15 +1,15 @@
-@extends('layout.app')
-
-@section('title','create')
 
 
-@section('content')
-@php($seances = [
+<?php $__env->startSection('title','create'); ?>
+
+
+<?php $__env->startSection('content'); ?>
+<?php ($seances = [
     "8h30-11h00",
     "11h00-13h30",
     "13h30-16h00",
     "16h00-18h30"
-])
+]); ?>
 <style>
 .form-checkl-new{
     display: flex;
@@ -37,22 +37,23 @@
         </div>
 
         <div class="card-body">
-                @if (session('error'))
+                <?php if(session('error')): ?>
                     <div class="alert alert-danger alert-dismissible fade show my-3" role="alert">
-                        {{ session('error') }}
+                        <?php echo e(session('error')); ?>
+
                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                     </div>
-                @endif
-            <form action="{{route('absences.store')}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                {{-- @method('put') --}}
+                <?php endif; ?>
+            <form action="<?php echo e(route('absences.store')); ?>" method="POST" enctype="multipart/form-data">
+                <?php echo csrf_field(); ?>
+                
                 <div class="row mb-4">
                     <div class="col-md-6">
                         <label class="form-label">Code Stagiaire (CEF)</label>
                         <input 
                             type="text" 
                             readonly
-                            value="{{$ab->stagiaire_id}}"
+                            value="<?php echo e($ab->stagiaire_id); ?>"
                             name="cef" 
                             class="form-control" 
                             placeholder="Entrer le CEF" 
@@ -67,25 +68,26 @@
                     <label class="form-label fw-bold">Choisir les séances</label>
 
                     <div class="row">
-                        @for ($i = 0; $i < count($seances); $i++)
+                        <?php for($i = 0; $i < count($seances); $i++): ?>
                                 <div class="col-md-3">
                                     <div class="form-check-new">
                                         <input 
                                             class="form-check-input-new" 
-                                            {{ in_array($seances[$i], $data) ? 'checked' : '' }} 
+                                            <?php echo e(in_array($seances[$i], $data) ? 'checked' : ''); ?> 
                                             type="checkbox" 
                                             name="seance[]" 
-                                            value="{{ $seances[$i] }}" 
-                                            id="{{ 's'.($i+1) }}"
+                                            value="<?php echo e($seances[$i]); ?>" 
+                                            id="<?php echo e('s'.($i+1)); ?>"
                                         >
-                                        {{-- <input class="form-check-input-new" {{in_array($seances[$i],$data)?'checked':''}} type="checkbox" name="seance[]" value="8h30-11h00" id="{{'s'.($i+1)}}"> --}}
-                                        <label class="form-check-label-new" for="{{'s'.($i+1)}}">
-                                            {{$seances[$i]}}
+                                        
+                                        <label class="form-check-label-new" for="<?php echo e('s'.($i+1)); ?>">
+                                            <?php echo e($seances[$i]); ?>
+
                                         </label>
                                     </div>
                                     
                                 </div>     
-                        @endfor
+                        <?php endfor; ?>
 
                         <div class="row my-3">
                             <div class="col-md-6">
@@ -110,7 +112,7 @@
 
                     <input type="date"
                         name="date"
-                        value="{{$ab->date}}"
+                        value="<?php echo e($ab->date); ?>"
                         required
                         class="form-control">
                         
@@ -127,4 +129,5 @@
     </div>
 
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Desktop\DEV203\My_project_of_syntese\Gestion_Stagaiares\myApp\resources\views/absences/edit.blade.php ENDPATH**/ ?>

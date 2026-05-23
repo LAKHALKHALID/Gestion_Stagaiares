@@ -27,10 +27,11 @@
                 <div class="col-lg-6">
                     <div class="image-container text-center">
                         <!-- You can replace this placeholder SVG with a real image or dashboard screenshot -->
-                        <img style="width: 500px" src="{{asset('images/imgHome.png')}}" alt="">
+                        <img style="width: 500px" src="<?php echo e(asset('images/imgHome.png')); ?>" alt="">
                     </div>
                 </div>
 
             </div>
         </div>
     </section>
+<?php /**PATH D:\Desktop\DEV203\My_project_of_syntese\Gestion_Stagaiares\myApp\resources\views/components/landingPage.blade.php ENDPATH**/ ?>
