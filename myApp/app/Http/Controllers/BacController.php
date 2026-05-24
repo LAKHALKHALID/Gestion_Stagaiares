@@ -14,15 +14,10 @@ class BacController extends Controller
     public function index(Request $request)
     {
         // if($request->is_returned) return $request;
-        if($request->is_returned && $request->id ){
-            // return $request;
-            $is_returned = (int) $request->is_returned;
-            $retraitBacs = Bac::find($request->id);
-            $retraitBacs->update([
-                'is_returned'=>1
-            ]);
+        if($request->cef ){
+            $retraitBacs = Bac::where('stagiaire_id', $request->cef)->get();
         }
-        $retraitBacs = Bac::where('is_returned',0)->get();
+        $retraitBacs = Bac::all();
         return view('retraitBac.index',compact('retraitBacs'));
     }
 
@@ -41,6 +36,9 @@ class BacController extends Controller
     {
         $stagiaire =  Stagiaire::find($request->stagiaire_id);
         if($stagiaire){
+            if(Bac::where('cne', $request->cne)->exists()){
+                return back()->with('error','this cne already exit, and already make retrait back before');
+            }
             Bac::create($request->all());
             return redirect()->route('retraitBac.index')->with('success','Ajouter avec succée !');
         }
@@ -61,7 +59,6 @@ class BacController extends Controller
     public function edit(string $id)
     {
         $bac = Bac::find($id);
-        // return $bac;
         return view('retraitBac.edit',compact('bac'));
     }
 

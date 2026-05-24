@@ -38,7 +38,7 @@ class StagiaireController extends Controller
         }
 
         
-        $stagiaires = $query->simplePaginate(10);
+        $stagiaires = $query->paginate(10);
 
         $g = Groupe::all();
         $f = Filiere::all();
@@ -56,12 +56,23 @@ class StagiaireController extends Controller
 
     public function badge(Request $request){
         if($request->cef != null){
-            $stagiaires = Stagiaire::where('cef',$request->cef)->get();
+            
+            if(Stagiaire::find($request->cef)){
+                $stagiaires = Stagiaire::where('cef',$request->cef)->get();
+            }
+            else{
+                return back()->with('error', 'this cef of the stagiaire is not correct or does not exist');
+            }
             
         }
         elseif($request->groupe){
             $groupe = Groupe::where('nom_g', $request->groupe)->first();
-            $stagiaires = $groupe->stagiaires;
+            if($groupe){
+                $stagiaires = $groupe->stagiaires;
+            }
+            else{
+                return back()->with('error','this groupe does not existe');
+            }
         }
         else{
             $stagiaires = [];

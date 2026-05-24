@@ -5,77 +5,81 @@
 
 <?php $__env->startSection('content'); ?>
     <div class="container">
-      <?php if(session('success')): ?>
-          <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <?php if(session('success')): ?>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
 
-              <?php echo e(session('success')); ?>
+                <?php echo e(session('success')); ?>
 
 
-              <button type="button"
-                      class="btn-close"
-                      data-bs-dismiss="alert">
-              </button>
-          </div>
-      <?php endif; ?>
-      <a href="<?php echo e(route('retraitBac.create')); ?>" class="btn btn-primary my-3">Ajouter</a>
-      <table class="table table-hover text-center table-bordered table-head-bg-info table-bordered-bd-info">
-        <thead>
-          <tr>
-            
-            <th>CEF</th>
-            <th>CNE</th>
-            <th>Piece Justificative</th>
-            <th>Motife</th>
-            <th>type de retraite</th>
-            <th>date retrait</th>
-            <th>date retour</th>
-            <th>Status</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-            <?php $__currentLoopData = $retraitBacs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            
-                <tr >
-                  
-                  <td><?php echo e($item->stagiaire_id); ?></td>
-                  <td><?php echo e($item->cne); ?></td>
-                  <td><?php echo e($item->piece_justification); ?></td>
-                  <td><?php echo e($item->motif); ?></td>
-                  <td><?php echo e($item->type_retrait); ?></td>
-                  <td><?php echo e($item->date_retrait); ?></td>
-                  <td><?php echo e($item->date_retour); ?></td>
-                  <td>
+                <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="alert">
+                </button>
+            </div>
+        <?php endif; ?>
+        <a href="<?php echo e(route('retraitBac.create')); ?>" class="btn btn-primary my-3">Ajouter</a>
+        <form action="<?php echo e(route('retraitBac.index')); ?>" method="GET" class="d-flex align-items-end gap-2">
+            <div class="form-group">
+                <label for="cef" class="form-label font-weight-bold">Code Stagiaire</label>
+                <input 
+                    type="text" 
+                    id="cef" 
+                    name="cef" 
+                    placeholder="Ex: CEF001" 
+                    value="<?php echo e(request('cef')); ?>"
+                    class="form-control"
+                >
+            </div>
+
+            <button type="submit" class="btn btn-success m-2">
+                Search
+            </button>
+        </form>
+        <table class="table table-hover text-center table-bordered table-head-bg-info table-bordered-bd-info">
+            <thead>
+            <tr>
+                
+                <th>CEF</th>
+                <th>CNE</th>
+                <th>Piece Justificative</th>
+                <th>Motife</th>
+                <th>type de retraite</th>
+                <th>date retrait</th>
+                <th>date retour</th>
+                <th>is_return</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+                <?php $__currentLoopData = $retraitBacs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $item): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                
+                    <tr class="<?php echo e($item->is_returned ?'table-success' : 'table-danger'); ?>" >
                     
+                    <td><?php echo e($item->stagiaire_id); ?></td>
+                    <td><?php echo e($item->cne); ?></td>
+                    <td><?php echo e($item->piece_justification); ?></td>
+                    <td><?php echo e($item->motif); ?></td>
+                    <td><?php echo e($item->type_retrait); ?></td>
+                    <td><?php echo e($item->date_retrait); ?></td>
+                    <td><?php echo e($item->date_retour); ?></td>
+                    <td>
+                        
+                            <?php echo e($item->is_returned  ? 'Yes' : 'No'); ?>
 
-                    <!-- Added class="toggle-form" to the form -->
-                    <form action="<?php echo e(route('retraitBac.index')); ?>" method="GET" class="toggle-form">
-                        <div class="form-check form-switch d-flex align-items-center">
+                        
+                    </td>
+                    <td class="">
+                        <a href="<?php echo e(route('retraitBac.edit',['id'=>$item->id])); ?>" class="btn btn-success">Edit</a>
+                        
+                        
 
-                            <input data-toggle="toggle" 
-                                  data-onstyle="primary" 
-                                  data-style="btn-round"
-                                  type="checkbox"
-                                  name="is_returned"
-                                  value="1"
-                                  <?php echo e($item->is_returned ? 'checked' : ''); ?>>
-
-                        </div>
-                        <input type="hidden" name="id" value="<?php echo e($item->id); ?>">
-                    </form>
-                                      </td>
-                  <td class="">
-                    <a href="<?php echo e(route('retraitBac.edit',['id'=>$item->id])); ?>" class="btn btn-success">Edit</a>
-                    
-                    
-
-                  </td>
-                </tr>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-        </tbody>
-      </table>
+                    </td>
+                    </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+        </table>
     </div>
-  
+    
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>

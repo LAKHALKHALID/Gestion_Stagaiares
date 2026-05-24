@@ -1,29 +1,30 @@
-@extends('layout.app')
 
-{{-- @section('title','Edit Bac') --}}
 
-@section('content')
+
+
+<?php $__env->startSection('content'); ?>
 
 <div class="container">
 
     <h2 class="mb-4">Edit Bac</h2>
 
-    @if(session('error'))
+    <?php if(session('error')): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
 
-            {{ session('error') }}
+            <?php echo e(session('error')); ?>
+
 
             <button type="button"
                     class="btn-close"
                     data-bs-dismiss="alert">
             </button>
         </div>
-    @endif
+    <?php endif; ?>
 
-    <form action="{{route('retraitBac.update',['id'=>$bac->id])}}" method="POST">
+    <form action="<?php echo e(route('retraitBac.update',['id'=>$bac->id])); ?>" method="POST">
 
-        @csrf
-        @method('PUT')
+        <?php echo csrf_field(); ?>
+        <?php echo method_field('PUT'); ?>
 
         <div class="row">
 
@@ -35,7 +36,7 @@
                         name="stagiaire_id"
                         readonly
                         class="form-control"
-                        value="{{ $bac->stagiaire_id }}"
+                        value="<?php echo e($bac->stagiaire_id); ?>"
                         required>
             </div>
 
@@ -47,7 +48,7 @@
                         name="cne"
                         readonly
                         class="form-control"
-                        value="{{ $bac->cne }}"
+                        value="<?php echo e($bac->cne); ?>"
                         required>
             </div>
 
@@ -61,12 +62,12 @@
                     <option value="">-- Choisir --</option>
 
                     <option value="Retrait Provisoire"
-                        {{ $bac->type_retrait == 'Retrait Provisoire' ? 'selected' : '' }}>
+                        <?php echo e($bac->type_retrait == 'Retrait Provisoire' ? 'selected' : ''); ?>>
                         Retrait Provisoire
                     </option>
 
                     <option value="Retrait Définitif"
-                        {{ $bac->type_retrait == 'Retrait Définitif' ? 'selected' : '' }}>
+                        <?php echo e($bac->type_retrait == 'Retrait Définitif' ? 'selected' : ''); ?>>
                         Retrait Définitif
                     </option>
 
@@ -81,7 +82,7 @@
                 <input type="text"
                         name="motif"
                         class="form-control"
-                        value="{{ $bac->motif }}"
+                        value="<?php echo e($bac->motif); ?>"
                         required>
             </div>
 
@@ -95,12 +96,12 @@
                     <option value="">-- Choisir --</option>
 
                     <option value="CIN"
-                        {{ $bac->piece_justification == 'CIN' ? 'selected' : '' }}>
+                        <?php echo e($bac->piece_justification == 'CIN' ? 'selected' : ''); ?>>
                         CIN
                     </option>
 
                     <option value="Engagement"
-                        {{ $bac->piece_justification == 'Engagement' ? 'selected' : '' }}>
+                        <?php echo e($bac->piece_justification == 'Engagement' ? 'selected' : ''); ?>>
                         Engagement
                     </option>
 
@@ -115,7 +116,7 @@
                 <input type="date"
                        name="date_retrait"
                        class="form-control"
-                       value="{{ $bac->date_retrait }}"
+                       value="<?php echo e($bac->date_retrait); ?>"
                        required>
             </div>
 
@@ -127,7 +128,7 @@
                 <input type="date"
                        name="date_retour"
                        class="form-control"
-                       value="{{ $bac->date_retour }}"
+                       value="<?php echo e($bac->date_retour); ?>"
                        required>
             </div>
 
@@ -142,7 +143,8 @@
                             name="is_returned" 
                             id="is_returned_yes" 
                             value="1" 
-                            {{ old('is_returned', $bac->is_returned ?? '') == '1' ? 'checked' : '' }}
+                            <?php echo e(old('is_returned', $bac->is_returned ?? '') == '1' ? 'checked' : ''); ?>
+
                         >
                         <label class="form-check-label" for="is_returned_yes">
                             Oui (Yes)
@@ -156,7 +158,8 @@
                             name="is_returned" 
                             id="is_returned_no" 
                             value="0" 
-                            {{ old('is_returned', $bac->is_returned ?? '0') == '0' ? 'checked' : '' }}
+                            <?php echo e(old('is_returned', $bac->is_returned ?? '0') == '0' ? 'checked' : ''); ?>
+
                         >
                         <label class="form-check-label" for="is_returned_no">
                             Non (No)
@@ -175,4 +178,5 @@
 
 </div>
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Desktop\DEV203\My_project_of_syntese\Gestion_Stagaiares\myApp\resources\views/retraitBac/edit.blade.php ENDPATH**/ ?>

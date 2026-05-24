@@ -1,4 +1,4 @@
-@extends('layout.app')
+
 <style>
     .barcode{
         width: 200px;
@@ -25,14 +25,15 @@
     }
 }
 </style>
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="container mt-3">
-        @if (session('error'))
+        <?php if(session('error')): ?>
             <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
-                {{ session('error') }}
+                <?php echo e(session('error')); ?>
+
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
-        @endif
+        <?php endif; ?>
         <form action="" method="GET" class="row g-3 align-items-end">
 
           <!-- Input CEF -->
@@ -55,17 +56,17 @@
           </div>
 
         </form>
-        {{-- <script src="{{ asset('assets/js/JsBarcode.all.min.js') }}"></script> --}}
-    @if (!empty($stagiaires))
+        
+    <?php if(!empty($stagiaires)): ?>
         <button onclick="printSection()" class="btn btn-primary mb-3">
                 Print Container
             </button> 
-    @endif
+    <?php endif; ?>
     
     <div class="container mt-4">
         <div class="row" id="printable-container">
 
-            @foreach($stagiaires as $stagiaire)
+            <?php $__currentLoopData = $stagiaires; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $stagiaire): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
 
                 <div class="col-md-6 mb-1">
 
@@ -80,30 +81,36 @@
 
                                     <p class="mb-1">
                                         <strong>Nom  :</strong>
-                                        {{ $stagiaire->nom_francais }}
+                                        <?php echo e($stagiaire->nom_francais); ?>
+
                                     </p>
 
                                     <p class="mb-1">
                                         <strong>Prénom:</strong>
-                                        {{ $stagiaire->prenom_francais }}
+                                        <?php echo e($stagiaire->prenom_francais); ?>
+
                                     </p>
 
                                     <p class="mb-1">
                                         <strong>CIN  :</strong>
-                                        {{ $stagiaire->cin }}
+                                        <?php echo e($stagiaire->cin); ?>
+
                                     </p>
 
                                     <p class="mb-0">
                                         <strong>CEF     :</strong>
-                                        {{ $stagiaire->cef }}
+                                        <?php echo e($stagiaire->cef); ?>
+
                                     </p>
                                     <p class="mb-0">
                                         <strong>Filière   :</strong>
-                                        {{ $stagiaire->filieres[0]->nom_filiere_francais }}
+                                        <?php echo e($stagiaire->filieres[0]->nom_filiere_francais); ?>
+
                                     </p>
                                     <p class="mb-0">
                                         <strong>Goupes   :</strong>
-                                        {{ $stagiaire->groupes[0]->nom_g }}
+                                        <?php echo e($stagiaire->groupes[0]->nom_g); ?>
+
                                     </p>
 
 
@@ -115,11 +122,11 @@
                                         <strong>CEF AL ADARISSA FES   </strong>
                                     </p>
                                     <p class="mb-2">
-                                        <strong>{{ $stagiaire->nom_annee_scolaire }}</strong>
+                                        <strong><?php echo e($stagiaire->nom_annee_scolaire); ?></strong>
                                     </p>
 
                                     <svg class="barcode w-100"
-                                        data-cef="{{ $stagiaire->cef }}">
+                                        data-cef="<?php echo e($stagiaire->cef); ?>">
                                     </svg>
 
                                 </div>
@@ -132,7 +139,7 @@
 
                 </div>
 
-            @endforeach
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
         </div>
     </div>
@@ -159,4 +166,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layout.app', array_diff_key(get_defined_vars(), ['__data' => 1, '__path' => 1]))->render(); ?><?php /**PATH D:\Desktop\DEV203\My_project_of_syntese\Gestion_Stagaiares\myApp\resources\views/stagiaires/badge.blade.php ENDPATH**/ ?>
